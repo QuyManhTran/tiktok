@@ -27,6 +27,12 @@
     margin-left: 6px;
 }
 
+.icon {
+    display: inline-block;
+    width: 28px;
+    text-align: center;
+}
+
 .text {
     &:hover {
         text-decoration: underline;

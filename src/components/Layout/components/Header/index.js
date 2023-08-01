@@ -7,16 +7,16 @@ import {
     faMagnifyingGlass,
     faSpinner,
 } from '@fortawesome/free-solid-svg-icons';
-
+import Button from '../../../Button';
 import { Wrapper as PopperWrapper } from '../../../Popper';
 import Tippy from '@tippyjs/react/headless';
 import { useState } from 'react';
-import { useEffect } from 'react';
 import AccountItem from '../../../AcountItem';
 // import 'tippy.js/dist/tippy.css';
 const cx = classNames.bind(styles);
 function Header() {
-    const [searchResults, setSearchResults] = useState([]);
+    const searchResults = [];
+    // const [searchResults, setSearchResults] = useState([]);
 
     // useEffect(() => {
     //     setTimeout(() => {
@@ -65,7 +65,17 @@ function Header() {
                         </button>
                     </div>
                 </Tippy>
-                <div className={cx('actions')}></div>
+                <div className={cx('actions')}>
+                    <Button text>Upload</Button>
+                    <Button
+                        primary
+                        // rightIcon={
+                        //     <FontAwesomeIcon icon={faSignIn}></FontAwesomeIcon>
+                        // }
+                    >
+                        Login
+                    </Button>
+                </div>
             </div>
         </header>
     );

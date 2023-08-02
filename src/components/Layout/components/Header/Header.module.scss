@@ -12,6 +12,7 @@
 
 .inner {
     height: 100%;
+    padding: 0px 24px;
     width: var(--default-layout-with, 1150px);
     display: flex;
     align-items: center;
@@ -98,4 +99,5 @@
     margin-left: 28px;
     padding: 4px 8px;
     background-color: transparent;
+    cursor: pointer;
 }

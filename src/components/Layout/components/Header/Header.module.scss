@@ -19,8 +19,8 @@
     justify-content: space-between;
 }
 
-.logo {
-}
+// .logo {
+// }
 
 .search {
     position: relative;
@@ -99,5 +99,31 @@
     margin-left: 28px;
     padding: 4px 8px;
     background-color: transparent;
+    cursor: pointer;
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+}
+
+.upload-btn {
+    font-size: 2.2rem;
+    background-color: transparent;
+    padding: 4px 0;
+    cursor: pointer;
+}
+.inbox-btn {
+    font-size: 2.2rem;
+    padding: 4px 24px;
+    background-color: transparent;
+    cursor: pointer;
+}
+.user-avatar {
+    width: 32px;
+    height: 32px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 1px solid transparent;
     cursor: pointer;
 }

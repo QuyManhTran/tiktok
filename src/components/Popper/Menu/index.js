@@ -34,6 +34,7 @@ function Menu({ children, items, onChange = () => {} }) {
             onHide={() => {
                 setHistory((preHistory) => preHistory.slice(0, 1));
             }}
+            offset={[12, 10]}
             interactive
             placement="bottom-end"
             render={(attrs) => (

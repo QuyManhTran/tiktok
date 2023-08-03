@@ -17,6 +17,11 @@
     padding: 14px 16px;
     color: var(--text-color);
     line-height: 1.8rem;
+
+    &.separate {
+        border-top-color: #efeded;
+    }
+
     &:hover {
         // background-color: rgb(244, 244, 244);
         background-color: #ff3b5c0e;

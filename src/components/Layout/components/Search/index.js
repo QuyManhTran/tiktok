@@ -4,26 +4,39 @@ import AccountItem from '../../../AcountItem';
 import classNames from 'classnames/bind';
 import styles from './Search.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleXmark, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { faCircleXmark, faMagnifyingGlass, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useRef, useState } from 'react';
+import { useDebounce } from '../../../../hooks';
 const cx = classNames.bind(styles);
 
 function Search() {
     const [searchText, setSearchText] = useState('');
     const [resultDisplay, setResultDisplay] = useState(false);
     const [searchResults, setSearchResults] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const debounce = useDebounce(searchText, 400);
     useEffect(() => {
-        if (!searchText.trim()) {
+        if (!debounce.trim()) {
+            setSearchResults([]);
             return;
         }
-        if (searchText !== '') {
+        if (debounce !== '') {
+            setLoading(true);
             fetch(`https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(searchText)}&type=less`)
-                .then((res) => res.json())
-                .then((res) => setSearchResults(res.data));
+                .then((res) => {
+                    setLoading(false);
+                    return res.json();
+                })
+                .then((res) => {
+                    setSearchResults(res.data);
+                    setLoading(false);
+                })
+                .catch(() => setLoading(false));
         } else {
             setSearchResults([]);
         }
-    }, [searchText]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [debounce]);
     const inputRef = useRef();
     const handleClear = () => {
         setSearchText('');
@@ -59,13 +72,13 @@ function Search() {
                     onChange={(e) => setSearchText(e.target.value)}
                     onFocus={() => setResultDisplay(true)}
                 ></input>
-                {!!searchText && (
+                {!!searchText && !loading && (
                     <button className={cx('clear')} onClick={handleClear}>
                         <FontAwesomeIcon icon={faCircleXmark} />
                     </button>
                 )}
 
-                {/* <FontAwesomeIcon className={cx('loading')} icon={faSpinner} /> */}
+                {loading && <FontAwesomeIcon className={cx('loading')} icon={faSpinner} />}
                 <button className={cx('search-btn')}>
                     <FontAwesomeIcon icon={faMagnifyingGlass} />
                 </button>

@@ -12,16 +12,17 @@ import { userMenu, menuItems } from '../../../../asset/data/headerData';
 import { InboxIcon, UploadIcon } from '../../../Icon';
 import Image from '../../../Image';
 import Search from '../Search';
-// import 'tippy.js/dist/tippy.css';
+import { Link } from 'react-router-dom';
+import pathConfigs from '../../../../config/path';
 const cx = classNames.bind(styles);
 function Header() {
     const currentUser = true;
     return (
         <header className={cx('wrapper')}>
             <div className={cx('inner')}>
-                <div className={cx('logo')}>
-                    <img src={images.logo} alt="logo"></img>
-                </div>
+                <Link to={pathConfigs.home}>
+                    <img src={images.logo} className={cx('logo')} alt="logo"></img>
+                </Link>
                 <Search></Search>
                 <div className={cx('actions')}>
                     {currentUser ? (

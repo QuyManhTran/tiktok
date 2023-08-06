@@ -45,44 +45,57 @@ function Search() {
     const handleOutSideResults = () => {
         setResultDisplay(false);
     };
-    return (
-        <HeadlessTippy
-            visible={resultDisplay && searchResults.length > 0}
-            interactive
-            placement="bottom-end"
-            onClickOutside={handleOutSideResults}
-            render={(attrs) => (
-                <div className={cx('search-result')} tabIndex="-1" {...attrs}>
-                    <PopperWrapper>
-                        <h4 className={cx('search-title')}>Accounts</h4>
-                        {searchResults.map((user) => (
-                            <AccountItem key={user.id} data={user}></AccountItem>
-                        ))}
-                    </PopperWrapper>
-                </div>
-            )}
-        >
-            <div className={cx('search')}>
-                <input
-                    ref={inputRef}
-                    placeholder="Search accounts and videos"
-                    spellCheck={false}
-                    value={searchText}
-                    onChange={(e) => setSearchText(e.target.value)}
-                    onFocus={() => setResultDisplay(true)}
-                ></input>
-                {!!searchText && !loading && (
-                    <button className={cx('clear')} onClick={handleClear}>
-                        <FontAwesomeIcon icon={faCircleXmark} />
-                    </button>
-                )}
+    const handleChange = (e) => {
+        const keyWord = e.target.value;
+        const KEY_SPACE = /\s/g;
 
-                {loading && <FontAwesomeIcon className={cx('loading')} icon={faSpinner} />}
-                <button className={cx('search-btn')}>
-                    <FontAwesomeIcon icon={faMagnifyingGlass} />
-                </button>
-            </div>
-        </HeadlessTippy>
+        if (!KEY_SPACE.test(keyWord[0])) {
+            setSearchText(keyWord);
+        }
+    };
+    const handleMouseDown = (e) => {
+        e.preventDefault();
+    };
+    return (
+        <div>
+            <HeadlessTippy
+                visible={resultDisplay && searchResults.length > 0}
+                interactive
+                placement="bottom-end"
+                onClickOutside={handleOutSideResults}
+                render={(attrs) => (
+                    <div className={cx('search-result')} tabIndex="-1" {...attrs}>
+                        <PopperWrapper>
+                            <h4 className={cx('search-title')}>Accounts</h4>
+                            {searchResults.map((user) => (
+                                <AccountItem key={user.id} data={user}></AccountItem>
+                            ))}
+                        </PopperWrapper>
+                    </div>
+                )}
+            >
+                <div className={cx('search')}>
+                    <input
+                        ref={inputRef}
+                        placeholder="Search accounts and videos"
+                        spellCheck={false}
+                        value={searchText}
+                        onChange={handleChange}
+                        onFocus={() => setResultDisplay(true)}
+                    ></input>
+                    {!!searchText && !loading && (
+                        <button className={cx('clear')} onClick={handleClear}>
+                            <FontAwesomeIcon icon={faCircleXmark} />
+                        </button>
+                    )}
+
+                    {loading && <FontAwesomeIcon className={cx('loading')} icon={faSpinner} />}
+                    <button className={cx('search-btn')} onMouseDown={handleMouseDown}>
+                        <FontAwesomeIcon icon={faMagnifyingGlass} />
+                    </button>
+                </div>
+            </HeadlessTippy>
+        </div>
     );
 }
 

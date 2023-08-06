@@ -3,9 +3,15 @@
     --search-height: 46px;
     --search-top-residual: 9px;
     --search-btn-width: 52px;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
     width: 100%;
     height: var(--default-header-layout-height, 60px);
     box-shadow: 0px 1px 1px rgb(0 0 0 / 12%);
+    background-color: var(--white-color);
     display: flex;
     justify-content: center;
 }
@@ -19,8 +25,9 @@
     justify-content: space-between;
 }
 
-// .logo {
-// }
+.logo {
+    display: block;
+}
 
 .more-btn {
     font-size: 2rem;

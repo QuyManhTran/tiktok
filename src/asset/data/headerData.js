@@ -17,7 +17,97 @@ export const menuItems = [
                 },
                 {
                     code: 'VI',
-                    title: 'Viet Nam',
+                    title: 'Vietnamese',
+                    type: 'Language',
+                },
+                {
+                    code: 'FR',
+                    title: 'French',
+                    type: 'Language',
+                },
+                {
+                    code: 'ES',
+                    title: 'Spanish',
+                    type: 'Language',
+                },
+                {
+                    code: 'DE',
+                    title: 'German',
+                    type: 'Language',
+                },
+                {
+                    code: 'ZH',
+                    title: 'Chinese',
+                    type: 'Language',
+                },
+                {
+                    code: 'HI',
+                    title: 'Hindi',
+                    type: 'Language',
+                },
+                {
+                    code: 'AR',
+                    title: 'Arabic',
+                    type: 'Language',
+                },
+                {
+                    code: 'RU',
+                    title: 'Russian',
+                    type: 'Language',
+                },
+                {
+                    code: 'JA',
+                    title: 'Japanese',
+                    type: 'Language',
+                },
+                {
+                    code: 'PT',
+                    title: 'Portuguese',
+                    type: 'Language',
+                },
+                {
+                    code: 'IT',
+                    title: 'Italian',
+                    type: 'Language',
+                },
+                {
+                    code: 'KO',
+                    title: 'Korean',
+                    type: 'Language',
+                },
+                {
+                    code: 'TR',
+                    title: 'Turkish',
+                    type: 'Language',
+                },
+                {
+                    code: 'ID',
+                    title: 'Indonesian',
+                    type: 'Language',
+                },
+                {
+                    code: 'TH',
+                    title: 'Thai',
+                    type: 'Language',
+                },
+                {
+                    code: 'NL',
+                    title: 'Dutch',
+                    type: 'Language',
+                },
+                {
+                    code: 'SW',
+                    title: 'Swahili',
+                    type: 'Language',
+                },
+                {
+                    code: 'PL',
+                    title: 'Polish',
+                    type: 'Language',
+                },
+                {
+                    code: 'UK',
+                    title: 'Ukrainian',
                     type: 'Language',
                 },
             ],

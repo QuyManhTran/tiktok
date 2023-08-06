@@ -5,9 +5,11 @@
 }
 
 .container {
+    margin-top: 60px;
     padding: 0px 24px;
     width: var(--default-layout-with, 1150px);
     display: flex;
+    height: 2000px;
 }
 
 .content {

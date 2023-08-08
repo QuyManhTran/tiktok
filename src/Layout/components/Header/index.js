@@ -1,26 +1,26 @@
 import styles from './Header.module.scss';
 import classNames from 'classnames/bind';
-import images from '../../../../asset/images';
+import images from '../../../asset/images/index';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
-import Button from '../../../Button';
+import Button from '../../../components/Button';
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
-import Menu from '../../../Popper/Menu';
+import Menu from '../../../components/Popper/Menu';
 
-import { userMenu, menuItems } from '../../../../asset/data/headerData';
-import { InboxIcon, UploadIcon } from '../../../Icon';
-import Image from '../../../Image';
+import { userMenu, menuItems } from '../../../asset/data/headerData';
+import { InboxIcon, UploadIcon } from '../../../components/Icon';
+import Image from '../../../components/Image';
 import Search from '../Search';
 import { Link } from 'react-router-dom';
-import pathConfigs from '../../../../config/path';
+import config from '../../../config';
 const cx = classNames.bind(styles);
 function Header() {
     const currentUser = true;
     return (
         <header className={cx('wrapper')}>
             <div className={cx('inner')}>
-                <Link to={pathConfigs.home}>
+                <Link to={config.paths.home}>
                     <img src={images.logo} className={cx('logo')} alt="logo"></img>
                 </Link>
                 <Search></Search>

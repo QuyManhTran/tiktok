@@ -2,13 +2,13 @@ import Home from '../pages/Home';
 import Following from '../pages/Following';
 import Profile from '../pages/Profile';
 import Upload from '../pages/Upload';
-import { HeaderOnly } from '../components/Layout';
-import pathConfigs from '../config/path';
+import { HeaderOnly } from '../Layout';
+import config from '../config';
 const publicRoutes = [
-    { path: pathConfigs.home, component: Home },
-    { path: pathConfigs.following, component: Following },
-    { path: pathConfigs.profile, component: Profile },
-    { path: pathConfigs.upload, component: Upload, layout: HeaderOnly },
+    { path: config.paths.home, component: Home },
+    { path: config.paths.following, component: Following },
+    { path: config.paths.profile, component: Profile },
+    { path: config.paths.upload, component: Upload, layout: HeaderOnly },
 ];
 
 const privateRoutes = [];

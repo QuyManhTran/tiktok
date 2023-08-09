@@ -10,32 +10,33 @@ import {
     FollowingActiveIcon,
     LiveActiveIcon,
 } from '../../../components/Icon/Icons';
+import RecommendedAccounts from '../../../components/RecommendedAccount/RecommendedAccounts';
 const cx = classNames.bind(styles);
 function Sidebar() {
     return (
         <aside className={cx('wrapper')}>
-            {
-                <Menu>
-                    <MenuItem
-                        title="For you"
-                        to={config.paths.home}
-                        icon={<HomeIcon />}
-                        activeicon={<HomeActiveIcon />}
-                    ></MenuItem>
-                    <MenuItem
-                        title="Following"
-                        to={config.paths.following}
-                        icon={<FollowingIcon />}
-                        activeicon={<FollowingActiveIcon />}
-                    ></MenuItem>
-                    <MenuItem
-                        title="Live"
-                        to={config.paths.live}
-                        icon={<LiveIcon />}
-                        activeicon={<LiveActiveIcon />}
-                    ></MenuItem>
-                </Menu>
-            }
+            <Menu>
+                <MenuItem
+                    title="For you"
+                    to={config.paths.home}
+                    icon={<HomeIcon />}
+                    activeicon={<HomeActiveIcon />}
+                ></MenuItem>
+                <MenuItem
+                    title="Following"
+                    to={config.paths.following}
+                    icon={<FollowingIcon />}
+                    activeicon={<FollowingActiveIcon />}
+                ></MenuItem>
+                <MenuItem
+                    title="Live"
+                    to={config.paths.live}
+                    icon={<LiveIcon />}
+                    activeicon={<LiveActiveIcon />}
+                ></MenuItem>
+            </Menu>
+            <RecommendedAccounts label="Suggested accounts"></RecommendedAccounts>
+            <RecommendedAccounts label="Suggested accounts"></RecommendedAccounts>
         </aside>
     );
 }

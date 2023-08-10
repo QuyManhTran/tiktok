@@ -10,7 +10,7 @@ import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import { Wrapper as PopperWrapper } from '../Popper';
 const cx = classNames.bind(styles);
-function AccountItem({ data }) {
+function AccountItem({ user, following }) {
     const renderPreview = (attrs) => {
         return (
             <div tabIndex="-1" {...attrs}>
@@ -21,11 +21,16 @@ function AccountItem({ data }) {
                                 className={cx('avatar', {
                                     avatarPreview: true,
                                 })}
-                                alt="y nhi"
-                                src="https://p16-sign-va.tiktokcdn.com/tos-maliva-avt-0068/2ee29dd59f8fbb6c46bca00e40ed129e~c5_100x100.jpeg?x-expires=1691744400&x-signature=ft40umePJTb107XBsb46u1ak%2FBo%3D"
+                                alt={user.first_name + ' ' + user.last_name}
+                                src={user.avatar}
                             ></Image>
-                            <Button primary to={'/huynhtranynhi.1806'} className={cx('follow-btn')}>
-                                Follow
+                            <Button
+                                primary={!following}
+                                disabled={following}
+                                to={`/${user.nickname}`}
+                                className={cx('follow-btn')}
+                            >
+                                {following ? 'Followed' : 'Follow'}
                             </Button>
                         </header>
                         <div className={cx('body-preview')}>
@@ -34,19 +39,24 @@ function AccountItem({ data }) {
                                     [cx('user-name-preview')]: true,
                                 })}
                             >
-                                <strong>huynhtranynhi.1806</strong>
-                                <FontAwesomeIcon icon={faCheckCircle} className={cx('check-icon')}></FontAwesomeIcon>
+                                <strong>{user.nickname}</strong>
+                                {user.tick && (
+                                    <FontAwesomeIcon
+                                        icon={faCheckCircle}
+                                        className={cx('check-icon')}
+                                    ></FontAwesomeIcon>
+                                )}
                             </p>
-                            <p className={cx('name')}>Huỳnh Trần Ý Nhi</p>
+                            <p className={cx('name')}>{user.first_name + ' ' + user.last_name}</p>
                         </div>
                         <footer className={cx('footer-preview')}>
                             <p className={cx('analytics')}>
                                 <span className={cx('followers')}>
-                                    <strong className={cx('amount')}>128K</strong>
+                                    <strong className={cx('amount')}>{user.followings_count}M</strong>
                                     <strong className={cx('title')}>Followers</strong>
                                 </span>
                                 <span className={cx('likes')}>
-                                    <strong className={cx('amount')}>645M</strong>
+                                    <strong className={cx('amount')}>{user.likes_count}M</strong>
                                     <strong className={cx('title')}>Likes</strong>
                                 </span>
                             </p>
@@ -57,19 +67,17 @@ function AccountItem({ data }) {
         );
     };
     return (
-        <Tippy interactive offset={[-15, 5]} delay={[400, 200]} placement="bottom-start" render={renderPreview}>
-            <Link to={'/huynhtranynhi.1806'} className={cx('account-item')}>
-                <Image
-                    className={cx('avatar')}
-                    alt="y nhi"
-                    src="https://p16-sign-va.tiktokcdn.com/tos-maliva-avt-0068/2ee29dd59f8fbb6c46bca00e40ed129e~c5_100x100.jpeg?x-expires=1691744400&x-signature=ft40umePJTb107XBsb46u1ak%2FBo%3D"
-                ></Image>
+        <Tippy interactive offset={[-15, 5]} delay={[400, 0]} placement="bottom-start" render={renderPreview}>
+            <Link to={`/${user.nickname}`} className={cx('account-item')}>
+                <Image className={cx('avatar')} alt={user.first_name + ' ' + user.last_name} src={user.avatar}></Image>
                 <div className={cx('infor')}>
                     <p className={cx('user-name')}>
-                        <strong>huynhtranynhi.1806</strong>
-                        <FontAwesomeIcon icon={faCheckCircle} className={cx('check-icon')}></FontAwesomeIcon>
+                        <strong>{user.nickname}</strong>
+                        {user.tick && (
+                            <FontAwesomeIcon icon={faCheckCircle} className={cx('check-icon')}></FontAwesomeIcon>
+                        )}{' '}
                     </p>
-                    <p className={cx('name')}>Huỳnh Trần Ý Nhi</p>
+                    <p className={cx('name')}>{user.first_name + ' ' + user.last_name}</p>
                 </div>
             </Link>
         </Tippy>
@@ -77,6 +85,6 @@ function AccountItem({ data }) {
 }
 
 AccountItem.propTypes = {
-    data: PropTypes.object,
+    user: PropTypes.object,
 };
 export default AccountItem;

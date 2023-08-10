@@ -4,13 +4,12 @@ import PropTypes from 'prop-types';
 import AccountItem from './AccountItem';
 
 const cx = classNames.bind(styles);
-function RecommendedAccounts({ label }) {
+function RecommendedAccounts({ label, data, following }) {
     return (
         <div className={cx('wrapper')}>
             <p className={cx('label')}>{label}</p>
-            <AccountItem></AccountItem>
-            <AccountItem></AccountItem>
-            <AccountItem></AccountItem>
+            {data &&
+                data.map((user, index) => <AccountItem key={index} user={user} following={following}></AccountItem>)}
             <p className={cx('see-more')}>See more</p>
         </div>
     );

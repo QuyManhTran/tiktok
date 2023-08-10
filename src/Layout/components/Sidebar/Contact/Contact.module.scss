@@ -1,0 +1,41 @@
+.wrapper {
+    padding-top: 8px;
+    border-top: 1px solid #f1f1f2;
+    font-size: 1.2rem;
+    font-weight: 600;
+    a {
+        color: #16182380;
+        &:hover {
+            text-decoration: underline;
+            text-decoration-color: rgba(22, 24, 35, 0.5);
+        }
+    }
+}
+
+.header {
+    padding-top: 8px;
+}
+.header-item {
+    margin-right: 6px;
+}
+.body {
+    padding-top: 8px;
+}
+.service {
+    padding: 2px 0;
+}
+.service-item {
+    margin-right: 8px;
+}
+.footer {
+    padding-top: 8px;
+}
+.footer-item {
+    margin-right: 8px;
+}
+
+.copyright {
+    display: block;
+    padding-top: 14px;
+    color: #16182380;
+}

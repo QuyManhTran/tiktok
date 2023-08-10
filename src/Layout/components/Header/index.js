@@ -16,7 +16,7 @@ import { Link } from 'react-router-dom';
 import config from '../../../config';
 const cx = classNames.bind(styles);
 function Header() {
-    const currentUser = false;
+    const currentUser = true;
     return (
         <header className={cx('wrapper')}>
             <div className={cx('inner')}>

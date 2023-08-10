@@ -12,7 +12,12 @@
     display: flex;
 }
 
+.side-bar {
+    width: 300px;
+}
+
 .content {
     flex: 1;
+    position: relative;
     height: 2000px;
 }

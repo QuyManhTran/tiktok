@@ -67,20 +67,26 @@ function AccountItem({ user, following }) {
         );
     };
     return (
-        <Tippy interactive offset={[-15, 5]} delay={[400, 0]} placement="bottom-start" render={renderPreview}>
-            <Link to={`/${user.nickname}`} className={cx('account-item')}>
-                <Image className={cx('avatar')} alt={user.first_name + ' ' + user.last_name} src={user.avatar}></Image>
-                <div className={cx('infor')}>
-                    <p className={cx('user-name')}>
-                        <strong>{user.nickname}</strong>
-                        {user.tick && (
-                            <FontAwesomeIcon icon={faCheckCircle} className={cx('check-icon')}></FontAwesomeIcon>
-                        )}{' '}
-                    </p>
-                    <p className={cx('name')}>{user.first_name + ' ' + user.last_name}</p>
-                </div>
-            </Link>
-        </Tippy>
+        <div>
+            <Tippy interactive offset={[-5, -5]} delay={[400, 0]} placement="bottom-start" render={renderPreview}>
+                <Link to={`/${user.nickname}`} className={cx('account-item')}>
+                    <Image
+                        className={cx('avatar')}
+                        alt={user.first_name + ' ' + user.last_name}
+                        src={user.avatar}
+                    ></Image>
+                    <div className={cx('infor')}>
+                        <p className={cx('user-name')}>
+                            <strong>{user.nickname}</strong>
+                            {user.tick && (
+                                <FontAwesomeIcon icon={faCheckCircle} className={cx('check-icon')}></FontAwesomeIcon>
+                            )}{' '}
+                        </p>
+                        <p className={cx('name')}>{user.first_name + ' ' + user.last_name}</p>
+                    </div>
+                </Link>
+            </Tippy>
+        </div>
     );
 }
 

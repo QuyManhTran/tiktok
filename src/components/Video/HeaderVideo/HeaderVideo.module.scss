@@ -1,0 +1,91 @@
+.wrapper {
+    display: flex;
+    justify-content: flex-start;
+    max-width: 704px;
+}
+
+.avatarLink {
+    height: var(--avatar-video-size);
+}
+.avatar {
+    width: var(--avatar-video-size);
+    height: var(--avatar-video-size);
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 12px;
+}
+.body {
+    display: flex;
+    flex-direction: column;
+    width: 510px;
+    margin-right: 16px;
+}
+.profile-body {
+    padding-bottom: 2px;
+    // line-height: 20px;
+}
+.user-name {
+    display: inline-block;
+    margin-right: 4px;
+    font-weight: 700;
+    font-size: 1.8rem;
+
+    &:hover {
+        text-decoration: underline;
+        text-decoration-color: rgba(22, 24, 35, 1);
+    }
+}
+.name {
+    display: inline-block;
+    font-weight: 400;
+    font-size: 1.4rem;
+    color: rgba(22, 24, 35, 1);
+}
+.description {
+    display: block;
+    font-size: 1.6rem;
+    line-height: 22px;
+    font-weight: 400;
+}
+.music-link {
+    display: flex;
+    align-items: center;
+    padding-top: 4px;
+}
+
+.music-icon {
+    color: rgba(22, 24, 35, 1);
+}
+.music-title {
+    font-size: 14px;
+    &:hover {
+        text-decoration: underline;
+        text-decoration-color: rgba(22, 24, 35, 1);
+    }
+}
+.following {
+    padding-top: 8px;
+    .btn-follow {
+        min-width: 110px;
+    }
+}
+
+.btn-follow {
+    min-width: 110px;
+}
+
+.hash-tag {
+    display: inline-block;
+    font-weight: 600;
+    color: rgba(43, 93, 185, 1);
+
+    + .hash-tag {
+        margin-left: 4px;
+    }
+
+    &:hover {
+        text-decoration: underline;
+        text-decoration-color: rgba(22, 24, 35, 1);
+        text-decoration-thickness: 1px;
+    }
+}

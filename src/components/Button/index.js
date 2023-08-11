@@ -16,6 +16,7 @@ function Button({
     large = false,
     disabled = false,
     rounded = false,
+    following = false,
     className,
     onClick,
     ...passProps
@@ -51,6 +52,7 @@ function Button({
                 large,
                 disabled,
                 rounded,
+                following,
             })}
             {...props}
         >

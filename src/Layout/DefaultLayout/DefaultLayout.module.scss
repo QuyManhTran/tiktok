@@ -19,5 +19,6 @@
 .content {
     flex: 1;
     position: relative;
-    height: 2000px;
+    width: 100%;
+    min-width: 420px;
 }

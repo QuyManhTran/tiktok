@@ -85,6 +85,17 @@ function Sidebar() {
         setFollowedSeeMore(true);
     };
 
+    // handle appearance for scrollbar
+    const handleMouseEnter = (e) => {
+        const sideBar = e.target.closest('#sidebar');
+        sideBar.style.overflowY = 'auto';
+    };
+
+    const handleMouseLeave = (e) => {
+        const sideBar = e.target.closest('#sidebar');
+        sideBar.style.overflowY = 'hidden';
+    };
+
     // useEffect
     useEffect(() => {
         handleRcmAPI();
@@ -96,7 +107,7 @@ function Sidebar() {
     }, [followedPage]);
 
     return (
-        <aside className={cx('wrapper')}>
+        <aside id="sidebar" className={cx('wrapper')} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
             <Menu>
                 <MenuItem
                     title="For you"
@@ -120,7 +131,6 @@ function Sidebar() {
             <RecommendedAccounts
                 label="Suggested accounts"
                 data={rcmUsers}
-                following={false}
                 onSeeMore={handleSeeMore}
                 onSeeLess={handleSeeLess}
                 isSeeMore={seeMore}
@@ -128,7 +138,6 @@ function Sidebar() {
             <RecommendedAccounts
                 label="Following accounts"
                 data={followedUsers}
-                following={true}
                 onSeeMore={handleFollowedSeeMore}
                 isSeeMore={seeFollowedMore}
                 onSeeLess={handleFollowedSeeLess}

@@ -9,8 +9,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import { Wrapper as PopperWrapper } from '../Popper';
+import { useState } from 'react';
 const cx = classNames.bind(styles);
-function AccountItem({ user, following }) {
+function AccountItem({ user }) {
+    const [isFollow, setIsFollow] = useState(user.is_followed);
+    const handleFollow = () => {
+        console.log('oke');
+        setIsFollow(!isFollow);
+
+        // Call API
+    };
+
     const renderPreview = (attrs) => {
         return (
             <div tabIndex="-1" {...attrs}>
@@ -25,12 +34,12 @@ function AccountItem({ user, following }) {
                                 src={user.avatar}
                             ></Image>
                             <Button
-                                primary={!following}
-                                disabled={following}
-                                to={`/${user.nickname}`}
+                                primary={!isFollow}
+                                outline={isFollow}
                                 className={cx('follow-btn')}
+                                onClick={handleFollow}
                             >
-                                {following ? 'Followed' : 'Follow'}
+                                {isFollow ? 'Following' : 'Follow'}
                             </Button>
                         </header>
                         <div className={cx('body-preview')}>

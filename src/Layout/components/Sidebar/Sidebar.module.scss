@@ -4,7 +4,11 @@
     width: 300px;
     max-height: 92vh;
     min-height: 100px;
-    overflow: auto;
+    overflow-y: hidden;
     overscroll-behavior: contain;
     z-index: 99;
+}
+
+.wrapper::-webkit-scrollbar {
+    width: 6px;
 }

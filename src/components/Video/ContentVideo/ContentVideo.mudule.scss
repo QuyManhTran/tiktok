@@ -1,0 +1,59 @@
+.wrapper {
+    padding-left: 68px;
+    padding-top: 16px;
+}
+
+.video-wrapper {
+    position: relative;
+    width: var(--width-video);
+    height: var(--height-video);
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.video {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+// play button
+.play-controller {
+    position: absolute;
+    bottom: 26px;
+    left: 12px;
+    padding: 10px;
+    width: 40px;
+    height: 40px;
+    font-size: 2rem;
+    transition: opacity 0.3s;
+    color: var(--white-color);
+    cursor: pointer;
+}
+
+.volume-controller {
+    position: absolute;
+    bottom: 26px;
+    right: 12px;
+    padding: 10px;
+    width: 40px;
+    height: 40px;
+    font-size: 2rem;
+    transition: opacity 0.3s;
+    color: var(--white-color);
+    cursor: pointer;
+}
+
+.option-controller {
+    position: absolute;
+    top: 0px;
+    right: 12px;
+    padding: 10px;
+    width: 40px;
+    height: 40px;
+    font-size: 2.4rem;
+    transition: opacity 0.3s;
+    color: var(--white-color);
+    cursor: pointer;
+}

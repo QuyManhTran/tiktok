@@ -1,16 +1,17 @@
 import classNames from 'classnames/bind';
 import styles from './Video.module.scss';
 import HeaderVideo from './HeaderVideo';
+import { Fragment } from 'react';
+import ContentVideo from './ContentVideo/ContentVideo';
+// eslint-disable-next-line no-unused-vars
 const cx = classNames.bind(styles);
 
 function Video({ data }) {
     return (
-        <>
+        <Fragment>
             <HeaderVideo data={data}></HeaderVideo>
-            <video controls width="250">
-                <source src="https://files.fullstack.edu.vn/f8-tiktok/videos/1357-63c803d8e7cf7.mp4" type="video/mp4" />
-            </video>
-        </>
+            <ContentVideo></ContentVideo>
+        </Fragment>
     );
 }
 

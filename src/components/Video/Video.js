@@ -1,17 +1,35 @@
 import classNames from 'classnames/bind';
 import styles from './Video.module.scss';
 import HeaderVideo from './HeaderVideo';
-import { Fragment } from 'react';
 import ContentVideo from './ContentVideo/ContentVideo';
-// eslint-disable-next-line no-unused-vars
+
 const cx = classNames.bind(styles);
 
-function Video({ data }) {
+function Video({
+    data,
+    autoPlay,
+    isAutoMute,
+    isDefaultOutOfScreen,
+    syncVolume,
+    prevSyncVolume,
+    onGlobalMute,
+    onGlobalVolume,
+    onGlobalPrevValume,
+}) {
     return (
-        <Fragment>
+        <div className={cx('video')}>
             <HeaderVideo data={data}></HeaderVideo>
-            <ContentVideo></ContentVideo>
-        </Fragment>
+            <ContentVideo
+                autoPlay={autoPlay}
+                isAutoMute={isAutoMute}
+                onGlobalMute={onGlobalMute}
+                isDefaultOutOfScreen={isDefaultOutOfScreen}
+                onGlobalVolume={onGlobalVolume}
+                syncVolume={syncVolume}
+                prevSyncVolume={prevSyncVolume}
+                onGlobalPrevValume={onGlobalPrevValume}
+            ></ContentVideo>
+        </div>
     );
 }
 

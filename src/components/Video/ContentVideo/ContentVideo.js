@@ -9,21 +9,75 @@ import { useEffect, useRef, useState } from 'react';
 import Button from '../../Button';
 
 const cx = classNames.bind(styles);
-function ContentVideo() {
+function ContentVideo({
+    autoPlay,
+    isAutoMute,
+    isDefaultOutOfScreen,
+    syncVolume,
+    prevSyncVolume,
+    onGlobalPrevValume,
+    onGlobalMute,
+    onGlobalVolume,
+}) {
     const playController = useRef();
     const volumeBar = useRef();
     const volumeSlider = useRef();
+    const [isMount, setIsMount] = useState(isDefaultOutOfScreen);
     const [isEnter, setIsEnter] = useState(false);
     const [isEnterTippy, setIsEnterTippy] = useState(false);
-    const [isPlaying, setIsPlaying] = useState(true);
-    const [isMute, setIsMute] = useState(true);
-    const [posSlider, setPosSlider] = useState(0);
+    const [isPlaying, setIsPlaying] = useState(autoPlay);
+    const [volumeValue, setVolumeValue] = useState(syncVolume);
     const [isEnterProgress, setEnterProGress] = useState(false);
     const [isMouseDown, setIsMouseDown] = useState(false);
-    const [volumeValue, setVolumeValue] = useState(1);
+    const [posSlider, setPosSlider] = useState(0);
     const [totalTime, setTotalTime] = useState('');
     const [currentTime, setCurrentTime] = useState('00:00');
+
+    useEffect(() => {
+        if (playController.current) {
+            playController.current.volume = syncVolume;
+        }
+    });
+
+    useEffect(() => {
+        if (isMount) {
+            playController.current.play();
+            setIsPlaying(true);
+        } else {
+            playController.current.pause();
+            setIsPlaying(false);
+        }
+    }, [isMount]);
+
+    useEffect(() => {
+        playController.current.volume = syncVolume;
+        if (volumeBar.current) {
+            volumeBar.current.style.height = `${syncVolume * 100}%`;
+        }
+        if (volumeSlider.current) {
+            volumeSlider.current.style.top = `${(1 - syncVolume) * 80}%`;
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [volumeValue]);
+
     // handle functions
+    window.addEventListener('scroll', () => {
+        if (playController.current) {
+            const windowHeight = window.innerHeight;
+            const videoTop = playController.current.getBoundingClientRect().top;
+            const videoBottom = playController.current.getBoundingClientRect().bottom;
+            const videoHeight = playController.current.getBoundingClientRect().height;
+            if (!isMount) {
+                if (videoTop > 0 && videoBottom < windowHeight) {
+                    setIsMount(true);
+                }
+            } else if (isMount) {
+                if (videoTop + videoHeight / 2 < 0 || videoTop + videoHeight / 2 > windowHeight) {
+                    setIsMount(false);
+                }
+            }
+        }
+    });
 
     const renderPreview = (attrs) => {
         return (
@@ -47,16 +101,16 @@ function ContentVideo() {
         return (
             <div tabIndex="-1" {...attrs}>
                 <div className={cx('adjust-volume')}>
-                    <div className={cx('wrapper-volume')} onMouseDown={handleVolumDown} onMouseUp={handleVolumeUp}>
+                    <div className={cx('wrapper-volume')} onMouseUp={handleVolumeUp}>
                         <div
                             className={cx('volume-bar')}
                             ref={volumeBar}
-                            style={{ height: `${volumeValue * 100}%` }}
+                            style={{ height: `${syncVolume * 100}%` }}
                         ></div>
                         <div
                             className={cx('volume-slider')}
                             ref={volumeSlider}
-                            style={{ top: `${(1 - volumeValue) * 80}%` }}
+                            style={{ top: `${(1 - syncVolume) * 80}%` }}
                             onMouseUp={(e) => e.stopPropagation()}
                         ></div>
                     </div>
@@ -64,15 +118,6 @@ function ContentVideo() {
             </div>
         );
     };
-    useEffect(() => {
-        playController.current.volume = volumeValue;
-        if (volumeBar.current) {
-            volumeBar.current.style.height = `${volumeValue * 100}%`;
-        }
-        if (volumeSlider.current) {
-            volumeSlider.current.style.top = `${(1 - volumeValue) * 80}%`;
-        }
-    }, [volumeValue]);
 
     const handlePlay = () => {
         if (playController.current.paused) {
@@ -82,10 +127,6 @@ function ContentVideo() {
             playController.current.pause();
             setIsPlaying(false);
         }
-    };
-
-    const handleMute = () => {
-        setIsMute(!isMute);
     };
 
     const handleUpdateTime = (e) => {
@@ -119,7 +160,6 @@ function ContentVideo() {
     };
 
     // handle volume
-    const handleVolumDown = () => {};
 
     const handleVolumeUp = (e) => {
         const elementRect = e.target.getBoundingClientRect();
@@ -127,10 +167,31 @@ function ContentVideo() {
         let currentPercent = (elementRect.height - currentPosY + elementRect.y) / elementRect.height;
         if (currentPercent < 0.1) {
             currentPercent = 0;
+            onGlobalPrevValume(syncVolume);
+            onGlobalMute(true);
         } else {
             currentPercent = currentPercent.toFixed(1);
+            if (isAutoMute) {
+                onGlobalMute(false);
+            }
         }
         setVolumeValue(currentPercent);
+        onGlobalVolume(currentPercent);
+    };
+
+    const handleMute = () => {
+        if (isAutoMute) {
+            // setVolumeValue(prevVolumeValue);
+            setVolumeValue(prevSyncVolume);
+            onGlobalVolume(prevSyncVolume);
+        } else {
+            // setPreVVolumeValue(syncVolume);
+            onGlobalPrevValume(syncVolume);
+            setVolumeValue(0);
+            onGlobalVolume(0);
+        }
+        // setIsMute(!isMute);
+        onGlobalMute(!isAutoMute);
     };
 
     return (
@@ -141,7 +202,7 @@ function ContentVideo() {
                     setIsEnter(true);
                 }}
                 onMouseLeave={() => {
-                    setIsEnter(true);
+                    setIsEnter(false);
                 }}
             >
                 <video
@@ -149,8 +210,8 @@ function ContentVideo() {
                     className={cx('video')}
                     src="https://files.fullstack.edu.vn/f8-tiktok/videos/2943-64d72a62262ea.mp4"
                     preload="auto"
-                    autoPlay
-                    muted={isMute}
+                    autoPlay={autoPlay}
+                    muted={isAutoMute}
                     loop
                     onTimeUpdate={handleUpdateTime}
                 ></video>
@@ -183,7 +244,7 @@ function ContentVideo() {
                 )}
 
                 {(isEnter || isEnterTippy) && (
-                    <>
+                    <div>
                         <Tippy
                             interactive
                             offset={[4, 12]}
@@ -193,11 +254,11 @@ function ContentVideo() {
                             hideOnClick={false}
                         >
                             <div className={cx('volume-controller')} onClick={handleMute}>
-                                {!isMute && <Volume className={cx('volume-on')}></Volume>}
-                                {isMute && <XmarkVolume className={cx('volume-off')}></XmarkVolume>}
+                                {!isAutoMute && <Volume className={cx('volume-on')}></Volume>}
+                                {isAutoMute && <XmarkVolume className={cx('volume-off')}></XmarkVolume>}
                             </div>
                         </Tippy>
-                    </>
+                    </div>
                 )}
                 {(isEnter || isEnterTippy) && (
                     <div

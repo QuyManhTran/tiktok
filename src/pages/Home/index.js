@@ -3,7 +3,7 @@ import styles from './Home.module.scss';
 import Video from '../../components/Video/Video';
 import { useState } from 'react';
 const cx = classNames.bind(styles);
-const data = [1, 2];
+const data = [1];
 function Home() {
     const [autoPlay, setAutoPlay] = useState(false);
     const [isAutoMute, setIsAutoMute] = useState(true);

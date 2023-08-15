@@ -3,14 +3,34 @@ import styles from './ActionItems.module.scss';
 import Tippy from '@tippyjs/react/headless';
 import ActionItem from '../../ActionItem';
 import { Wrapper as ShareLink } from '../../Popper';
-import { HeartIcon, CommentIcon, ShareIcon, FavoriteIcon } from '../../Icon/Icons';
+import {
+    HeartIcon,
+    CommentIcon,
+    ShareIcon,
+    FavoriteIcon,
+    Twitter,
+    LineIcon,
+    TelegramIcon,
+    EmailIcon,
+    LinkedlnIcon,
+} from '../../Icon/Icons';
 import Button from '../../Button';
 import { EmbedIcon, SendIcon, WhatsAppIcon, CopyLinkIcon, FacebookIcon } from '../../Icon/Icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
+import { useState } from 'react';
 
 const cx = classNames.bind(styles);
-function ActionItems() {
+function ActionItems({ data }) {
+    const [isShowAll, setIsShowAll] = useState(false);
+    // eslint-disable-next-line no-unused-vars
+    const [allData, setAllData] = useState(data);
+    const onShowAll = () => {
+        setIsShowAll(!isShowAll);
+    };
+    const onHiddenAll = () => {
+        setIsShowAll(false);
+    };
     const sharingLink = (attrs) => {
         return (
             <div tabIndex="-1" {...attrs}>
@@ -31,10 +51,39 @@ function ActionItems() {
                         <Button leftIcon={<CopyLinkIcon></CopyLinkIcon>} className={cx('link-item')}>
                             <span>Copy Link</span>
                         </Button>
-                        <div className={cx('link-item')}>
-                            <FontAwesomeIcon icon={faAngleDown} className={cx('down-icon')} />
-                        </div>
+                        {/* {hidden item} */}
+
+                        {isShowAll && (
+                            <>
+                                <Button leftIcon={<Twitter></Twitter>} className={cx('link-item')}>
+                                    <span>Share to Twitter</span>
+                                </Button>
+                                <Button leftIcon={<LinkedlnIcon></LinkedlnIcon>} className={cx('link-item')}>
+                                    <span>Share to Linkedln</span>
+                                </Button>
+                                <Button leftIcon={<TelegramIcon></TelegramIcon>} className={cx('link-item')}>
+                                    <span>Share to Telegram</span>
+                                </Button>
+                                <Button leftIcon={<EmailIcon></EmailIcon>} className={cx('link-item')}>
+                                    <span>Share to Email</span>
+                                </Button>
+                                <Button leftIcon={<LineIcon></LineIcon>} className={cx('link-item')}>
+                                    <span>Share to Line</span>
+                                </Button>
+                            </>
+                        )}
+                        {!isShowAll && (
+                            <div className={cx('link-item')} style={{ padding: '0px 8px' }} onClick={onShowAll}>
+                                <FontAwesomeIcon icon={faAngleDown} className={cx('down-icon')} />
+                            </div>
+                        )}
                     </div>
+                    <div
+                        className={cx('arrow-nothing', {
+                            // eslint-disable-next-line no-useless-computed-key
+                            ['arrow-down']: !isShowAll,
+                        })}
+                    ></div>
                 </ShareLink>
             </div>
         );
@@ -42,15 +91,22 @@ function ActionItems() {
     return (
         <div className={cx('wrapper')}>
             <ActionItem icon={<HeartIcon></HeartIcon>} active={cx('red-active')}>
-                841.4K
+                {allData.likes_count}
             </ActionItem>
-            <ActionItem icon={<CommentIcon></CommentIcon>}>18.8K</ActionItem>
+            <ActionItem icon={<CommentIcon></CommentIcon>}>{allData.comments_count}</ActionItem>
             <ActionItem icon={<FavoriteIcon></FavoriteIcon>} active={cx('yellow-active')}>
-                92.8K
+                {allData.views_count}
             </ActionItem>
-            <Tippy interactive placement="top-start" offset={[-16, 0]} render={sharingLink}>
+            <Tippy
+                interactive
+                placement="top-start"
+                offset={[-16, 4]}
+                delay={[0, 400]}
+                render={sharingLink}
+                onHidden={onHiddenAll}
+            >
                 <div>
-                    <ActionItem icon={<ShareIcon></ShareIcon>}>39.1K</ActionItem>
+                    <ActionItem icon={<ShareIcon></ShareIcon>}>{allData.shares_count}</ActionItem>
                 </div>
             </Tippy>
         </div>

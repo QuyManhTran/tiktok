@@ -10,6 +10,7 @@ import Button from '../../Button';
 
 const cx = classNames.bind(styles);
 function ContentVideo({
+    data,
     autoPlay,
     isAutoMute,
     isDefaultOutOfScreen,
@@ -22,6 +23,7 @@ function ContentVideo({
     const playController = useRef();
     const volumeBar = useRef();
     const volumeSlider = useRef();
+    const [allData, setAllData] = useState(data);
     const [isMount, setIsMount] = useState(isDefaultOutOfScreen);
     const [isEnter, setIsEnter] = useState(false);
     const [isEnterTippy, setIsEnterTippy] = useState(false);
@@ -208,7 +210,7 @@ function ContentVideo({
                 <video
                     ref={playController}
                     className={cx('video')}
-                    src="https://files.fullstack.edu.vn/f8-tiktok/videos/2943-64d72a62262ea.mp4"
+                    src={allData.file_url}
                     preload="auto"
                     autoPlay={autoPlay}
                     muted={isAutoMute}

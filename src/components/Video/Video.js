@@ -22,6 +22,7 @@ function Video({
             <HeaderVideo data={data}></HeaderVideo>
             <div className={cx('wrapper-content')}>
                 <ContentVideo
+                    data={data}
                     autoPlay={autoPlay}
                     isAutoMute={isAutoMute}
                     onGlobalMute={onGlobalMute}
@@ -31,7 +32,7 @@ function Video({
                     prevSyncVolume={prevSyncVolume}
                     onGlobalPrevValume={onGlobalPrevValume}
                 ></ContentVideo>
-                <ActionItems className={cx('action-items')}></ActionItems>
+                <ActionItems className={cx('action-items')} data={data}></ActionItems>
             </div>
         </div>
     );

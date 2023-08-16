@@ -15,8 +15,8 @@ import Search from '../Search';
 import { Link } from 'react-router-dom';
 import config from '../../../config';
 const cx = classNames.bind(styles);
-function Header() {
-    const currentUser = true;
+function Header({ onModal }) {
+    const currentUser = false;
     return (
         <header className={cx('wrapper')}>
             <div className={cx('inner')}>
@@ -41,7 +41,9 @@ function Header() {
                     ) : (
                         <>
                             <Button text>Upload</Button>
-                            <Button primary>Login</Button>
+                            <Button primary onClick={onModal}>
+                                Login
+                            </Button>
                         </>
                     )}
                     <Menu

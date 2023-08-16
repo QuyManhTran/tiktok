@@ -6,10 +6,10 @@ import * as videoServices from '../../service/videoServices';
 const cx = classNames.bind(styles);
 
 function Home() {
-    const [autoPlay, setAutoPlay] = useState(false);
     const [isAutoMute, setIsAutoMute] = useState(true);
     const [syncVolume, setSyncVolume] = useState(0);
     const [prevSyncVolume, setPrevSyncVolume] = useState(1);
+    // eslint-disable-next-line no-unused-vars
     const [isDefaultOutOfScreen, setIsDefaultOutOfScreen] = useState(false);
     const [data, setData] = useState([]);
     const [page, setPage] = useState(1);
@@ -33,7 +33,13 @@ function Home() {
 
     const callAPI = async () => {
         const response = await videoServices.getRcmVideo('for-you', page);
-        setData(response.data);
+        setData((prevData) => [...prevData, ...response.data]);
+    };
+
+    const loadMoreVideo = (index) => {
+        if (index + 2 === page * 15) {
+            setPage(page + 1);
+        }
     };
 
     return (
@@ -43,6 +49,7 @@ function Home() {
                     return (
                         <Video
                             key={index}
+                            index={index}
                             autoPlay={true}
                             isAutoMute={isAutoMute}
                             onGlobalMute={onGlobalMute}
@@ -52,12 +59,14 @@ function Home() {
                             prevSyncVolume={prevSyncVolume}
                             onGlobalPrevValume={onGlobalPrevValume}
                             data={video}
+                            loadMoreVideo={loadMoreVideo}
                         ></Video>
                     );
                 } else {
                     return (
                         <Video
                             key={index}
+                            index={index}
                             autoPlay={false}
                             isAutoMute={isAutoMute}
                             onGlobalMute={onGlobalMute}
@@ -67,6 +76,7 @@ function Home() {
                             prevSyncVolume={prevSyncVolume}
                             onGlobalPrevValume={onGlobalPrevValume}
                             data={video}
+                            loadMoreVideo={loadMoreVideo}
                         ></Video>
                     );
                 }

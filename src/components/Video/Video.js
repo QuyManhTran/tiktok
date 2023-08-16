@@ -7,6 +7,7 @@ import ActionItems from './ActionItems';
 const cx = classNames.bind(styles);
 
 function Video({
+    index,
     data,
     autoPlay,
     isAutoMute,
@@ -16,6 +17,7 @@ function Video({
     onGlobalMute,
     onGlobalVolume,
     onGlobalPrevValume,
+    loadMoreVideo,
 }) {
     return (
         <div className={cx('video')}>
@@ -31,6 +33,8 @@ function Video({
                     syncVolume={syncVolume}
                     prevSyncVolume={prevSyncVolume}
                     onGlobalPrevValume={onGlobalPrevValume}
+                    index={index}
+                    loadMoreVideo={loadMoreVideo}
                 ></ContentVideo>
                 <ActionItems className={cx('action-items')} data={data}></ActionItems>
             </div>

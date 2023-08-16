@@ -22,3 +22,44 @@
     width: 100%;
     min-width: 420px;
 }
+
+.back-first-page {
+    position: fixed;
+    bottom: 16px;
+    right: 24px;
+    animation: DownToUp 0.5s linear;
+}
+
+.hidden-first-page {
+    animation: UpToDown 0.5s linear;
+    transform: translateY(150%);
+}
+
+.back-btn {
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    min-width: 35px;
+}
+
+.back-icon {
+    line-height: 1px;
+}
+
+@keyframes DownToUp {
+    from {
+        transform: translateY(100%);
+    }
+    to {
+        transform: translateY(0%);
+    }
+}
+
+@keyframes UpToDown {
+    from {
+        transform: translateY(0%);
+    }
+    to {
+        transform: translateY(150%);
+    }
+}

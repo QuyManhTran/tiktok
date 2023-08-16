@@ -10,6 +10,7 @@ import Button from '../../Button';
 
 const cx = classNames.bind(styles);
 function ContentVideo({
+    index,
     data,
     autoPlay,
     isAutoMute,
@@ -19,10 +20,12 @@ function ContentVideo({
     onGlobalPrevValume,
     onGlobalMute,
     onGlobalVolume,
+    loadMoreVideo,
 }) {
     const playController = useRef();
     const volumeBar = useRef();
     const volumeSlider = useRef();
+    // eslint-disable-next-line no-unused-vars
     const [allData, setAllData] = useState(data);
     const [isMount, setIsMount] = useState(isDefaultOutOfScreen);
     const [isEnter, setIsEnter] = useState(false);
@@ -34,6 +37,13 @@ function ContentVideo({
     const [posSlider, setPosSlider] = useState(0);
     const [totalTime, setTotalTime] = useState('');
     const [currentTime, setCurrentTime] = useState('00:00');
+
+    useEffect(() => {
+        if (isMount && (index + 2) % 15 === 0) {
+            loadMoreVideo(index);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isMount]);
 
     useEffect(() => {
         if (playController.current) {
@@ -63,22 +73,26 @@ function ContentVideo({
     }, [volumeValue]);
 
     // handle functions
-    window.addEventListener('scroll', () => {
-        if (playController.current) {
-            const windowHeight = window.innerHeight;
-            const videoTop = playController.current.getBoundingClientRect().top;
-            const videoBottom = playController.current.getBoundingClientRect().bottom;
-            const videoHeight = playController.current.getBoundingClientRect().height;
-            if (!isMount) {
-                if (videoTop > 0 && videoBottom < windowHeight) {
-                    setIsMount(true);
-                }
-            } else if (isMount) {
-                if (videoTop + videoHeight / 2 < 0 || videoTop + videoHeight / 2 > windowHeight) {
-                    setIsMount(false);
+    useEffect(() => {
+        const listenWindow = () => {
+            if (playController.current) {
+                const windowHeight = window.innerHeight;
+                const videoTop = playController.current.getBoundingClientRect().top;
+                const videoBottom = playController.current.getBoundingClientRect().bottom;
+                const videoHeight = playController.current.getBoundingClientRect().height;
+                if (!isMount) {
+                    if (videoTop > 0 && videoBottom < windowHeight) {
+                        setIsMount(true);
+                    }
+                } else if (isMount) {
+                    if (videoTop + videoHeight / 2 < 0 || videoTop + videoHeight / 2 > windowHeight) {
+                        setIsMount(false);
+                    }
                 }
             }
-        }
+        };
+        window.addEventListener('scroll', listenWindow);
+        return () => window.removeEventListener('scroll', listenWindow);
     });
 
     const renderPreview = (attrs) => {

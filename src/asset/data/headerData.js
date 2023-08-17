@@ -144,3 +144,20 @@ export const userMenu = [
         separate: true,
     },
 ];
+
+export const months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+];
+export const allDay = Array.from({ length: 31 }, (_, index) => index + 1);
+export const allYear = Array.from({ length: 50 }, (_, index) => 2023 - index);

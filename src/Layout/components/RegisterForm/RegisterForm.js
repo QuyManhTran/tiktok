@@ -10,6 +10,8 @@ const cx = classNames.bind(styles);
 function RegisterForm({ ...props }) {
     const [allSteps, setAllSteps] = useState([{ component: SelectionStep }]);
     const [CurrentStep, setCurrentStep] = useState(() => allSteps[allSteps.length - 1].component);
+
+    // function
     const onChangeStep = (component) => {
         if (typeof component !== 'function') {
             alert('not a component');

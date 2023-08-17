@@ -6,6 +6,7 @@ import {
     FacebookIcon,
     GoogleIcon,
     LineIcon,
+    QRIcon,
     TelegramIcon,
     Twitter,
     UserIcon,
@@ -23,12 +24,20 @@ function LoginForm({ ...props }) {
         >
             <div className={cx('login-methods')}>
                 <Button
+                    leftIcon={<QRIcon className={cx('method-icon')}></QRIcon>}
+                    className={cx('method-item')}
+                    classIcon={cx('span-icon')}
+                    classTitle={cx('span-title')}
+                >
+                    <span className={cx('text-method')}>Use QR code</span>
+                </Button>
+                <Button
                     leftIcon={<UserIcon className={cx('method-icon')}></UserIcon>}
                     className={cx('method-item')}
                     classIcon={cx('span-icon')}
                     classTitle={cx('span-title')}
                 >
-                    <span className={cx('text-method')}>Use phone number or email</span>
+                    <span className={cx('text-method')}>Phone number / Email / TikTok ID</span>
                 </Button>
                 <Button
                     leftIcon={<FacebookIcon className={cx('method-icon')}></FacebookIcon>}

@@ -38,8 +38,10 @@ function DefaultLayout({ children }) {
     const onModal = () => {
         if (!isModal) {
             document.body.style.overflow = 'hidden';
+            document.body.style.paddingRight = '8px';
         } else {
             document.body.style.overflow = 'auto';
+            document.body.style.paddingRight = '0px';
         }
         setIsModal(!isModal);
     };
@@ -94,7 +96,7 @@ function DefaultLayout({ children }) {
                 </div>
             </div>
             {isModal && (
-                <div className={cx('modal')} onClick={onModal}>
+                <div className={cx('modal')} onClick={onRemoveModal}>
                     {!isLogin && <LoginForm {...props}></LoginForm>}
                     {isLogin && <RegisterForm {...props}></RegisterForm>}
                 </div>

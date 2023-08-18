@@ -3,7 +3,9 @@ import styles from './VerifyInfor.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { useState, memo } from 'react';
-import { months, allDay, allYear } from '../../../../asset/data/headerData';
+import { months, allDay, allYear } from '../../../../asset/data/formData';
+import PhoneNumber from './PhoneNumber';
+import Email from './Email/Email';
 const cx = classNames.bind(styles);
 
 function VerifyInfor() {
@@ -13,7 +15,9 @@ function VerifyInfor() {
     const [monthUp, setMonthUp] = useState(false);
     const [dayUp, setDayUp] = useState(false);
     const [yearUp, setYearUp] = useState(false);
-
+    const [isClickMonth, setIsClickMonth] = useState(false);
+    const [isClickDay, setIsClickDay] = useState(false);
+    const [isClickYear, setIsClickYear] = useState(false);
     const onSetDate = (id, e) => {
         e.stopPropagation();
         switch (id) {
@@ -53,10 +57,19 @@ function VerifyInfor() {
     const onSelect = (e) => {
         if (e.target.getAttribute('type') === 'month') {
             setMonth(e.target.innerText);
+            if (!isClickMonth) {
+                setIsClickMonth(true);
+            }
         } else if (e.target.getAttribute('type') === 'day') {
             setDay(e.target.innerText);
+            if (!isClickDay) {
+                setIsClickDay(true);
+            }
         } else if (e.target.getAttribute('type') === 'year') {
             setYear(e.target.innerText);
+            if (!isClickYear) {
+                setIsClickYear(true);
+            }
         }
     };
 
@@ -66,7 +79,11 @@ function VerifyInfor() {
                 <span className={cx('title')}>What is your date of birth?</span>
                 <div className={cx('date-infor')}>
                     <div className={cx('wrapper-infor')} onClick={(e) => onSetDate('#month', e)}>
-                        <div className={cx('inner-infor')}>
+                        <div
+                            className={cx('inner-infor', {
+                                active: isClickMonth,
+                            })}
+                        >
                             {month}
                             <FontAwesomeIcon
                                 icon={faCaretDown}
@@ -84,7 +101,11 @@ function VerifyInfor() {
                         </div>
                     </div>
                     <div className={cx('wrapper-infor')} onClick={(e) => onSetDate('#day', e)}>
-                        <div className={cx('inner-infor')}>
+                        <div
+                            className={cx('inner-infor', {
+                                active: isClickDay,
+                            })}
+                        >
                             {day}
                             <FontAwesomeIcon
                                 icon={faCaretDown}
@@ -102,7 +123,11 @@ function VerifyInfor() {
                         </div>
                     </div>
                     <div className={cx('wrapper-infor')} onClick={(e) => onSetDate('#year', e)}>
-                        <div className={cx('inner-infor')}>
+                        <div
+                            className={cx('inner-infor', {
+                                active: isClickYear,
+                            })}
+                        >
                             {year}
                             <FontAwesomeIcon
                                 icon={faCaretDown}
@@ -120,7 +145,9 @@ function VerifyInfor() {
                         </div>
                     </div>
                 </div>
+                <p className={cx('policy')}>Your date won't be displayed publicly</p>
             </header>
+            <Email isClickAll={isClickDay && isClickMonth && isClickYear}></Email>
         </div>
     );
 }

@@ -1,7 +1,7 @@
 import classNames from 'classnames/bind';
 import styles from './RegisterForm.mudule.scss';
 import WrapperForm from '../../../components/WrapperForm';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, memo, useCallback } from 'react';
 import SelectionStep from './SelectionStep';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleLeft } from '@fortawesome/free-solid-svg-icons';
@@ -12,13 +12,13 @@ function RegisterForm({ ...props }) {
     const [CurrentStep, setCurrentStep] = useState(() => allSteps[allSteps.length - 1].component);
 
     // function
-    const onChangeStep = (component) => {
+    const onChangeStep = useCallback((component) => {
         if (typeof component !== 'function') {
             alert('not a component');
         } else {
             setAllSteps((prev) => [...prev, { component: component }]);
         }
-    };
+    }, []);
 
     const onBackStep = () => {
         if (allSteps.length > 1) {
@@ -49,4 +49,4 @@ function RegisterForm({ ...props }) {
     );
 }
 
-export default RegisterForm;
+export default memo(RegisterForm);

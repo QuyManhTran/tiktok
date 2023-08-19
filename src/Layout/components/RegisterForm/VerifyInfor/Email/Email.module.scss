@@ -33,6 +33,7 @@
 
 // input
 .container-input {
+    position: relative;
     display: flex;
     background: rgba(22, 24, 35, 0.06);
     border: 1px solid rgba(22, 24, 35, 0.12);
@@ -152,4 +153,106 @@
 
 .see-code {
     display: block;
+}
+
+.commitee {
+    // margin-bottom: 16px;
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+.input-checkbox {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    background-color: #ffffff;
+    border: 1px solid #333333;
+}
+
+.input-box-checked {
+    background: rgb(254, 44, 85);
+    transition: all 0.1s ease 0s;
+    border-color: rgb(254, 44, 85);
+}
+
+.label-checkbox {
+    color: rgba(22, 24, 35, 0.75);
+    font-size: 1.2rem;
+    display: block;
+    padding-left: 8px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.non-check {
+    position: absolute;
+    left: 0;
+    width: 16px;
+    height: 16px;
+    transition: 0.1s ease 0s;
+    color: var(--white-color);
+    padding: 2px;
+    cursor: pointer;
+}
+
+//eye
+.wrapper-eye {
+    position: absolute;
+    right: 0px;
+    top: 50%;
+    padding: 12px;
+    transform: translateY(-50%);
+    color: rgba(22, 24, 35, 0.34);
+    cursor: pointer;
+}
+
+.icon-eye {
+    width: 18px;
+    height: 16px;
+    // transition: all 0.3s ease 0s;
+}
+
+// password validate
+.validte-password {
+    margin-bottom: 8px;
+}
+.title {
+    color: rgb(22, 24, 35);
+    font-weight: 600;
+    margin: 4px 0px;
+}
+.condition {
+    font-size: 1.2rem;
+    line-height: 15px;
+    margin: 4px 0px;
+    color: rgba(22, 24, 35, 0.5);
+    display: flex;
+    align-items: center;
+}
+.validate-icon {
+    width: 10px;
+    height: 10px;
+    margin-right: 4px;
+}
+
+.passed-validate {
+    color: rgb(11, 224, 155);
+}
+
+.unpassed-validate {
+    color: rgb(255, 76, 58);
+}
+
+.unpassed-border {
+    border-color: rgb(255, 76, 58);
+}
+
+.unpassed-input_boder {
+    border: 1px solid rgb(255, 76, 58);
+}
+.role {
 }

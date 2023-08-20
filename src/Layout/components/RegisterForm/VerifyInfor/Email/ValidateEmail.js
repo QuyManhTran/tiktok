@@ -15,3 +15,9 @@ export const validateEmail = {
         return /^\S+@\S+\.\S+$/.test(email);
     },
 };
+
+export const validateCode = {
+    isCode(code) {
+        return /[a-zA-Z]/.test(code);
+    },
+};

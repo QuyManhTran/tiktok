@@ -1,0 +1,130 @@
+.wrapper {
+    width: 100%;
+}
+.title {
+    color: rgb(22, 24, 35);
+    font-weight: 600;
+    font-size: 1.5rem;
+    margin: 8px 0;
+}
+.container-input {
+    position: relative;
+    display: flex;
+    background: rgba(22, 24, 35, 0.06);
+    border: 1px solid rgba(22, 24, 35, 0.12);
+    transition: all 0.3s ease 0s;
+    border-radius: 2px;
+    margin-bottom: 8px;
+    height: 44px;
+    line-height: 100%;
+}
+
+.input-box {
+    display: block;
+    flex: 1;
+    background-color: transparent;
+    color: rgb(22, 24, 35);
+    line-height: 100%;
+    padding: 0 12px;
+    outline: none;
+    font-size: 1.6rem;
+    caret-color: rgb(254, 44, 85);
+}
+
+.unpassed-validate {
+    color: rgb(255, 76, 58);
+}
+
+.unpassed-border {
+    border-color: rgb(255, 76, 58);
+}
+
+.unpassed-input_boder {
+    border: 1px solid rgb(255, 76, 58);
+}
+
+.caution-password {
+    position: absolute;
+    top: 50%;
+    right: calc(15% - 8px);
+    transform: translateY(-50%);
+    color: rgb(255, 76, 58);
+}
+.caution-icon {
+    width: 14px;
+    height: 14px;
+}
+
+.wrapper-eye {
+    position: absolute;
+    right: 0px;
+    top: 50%;
+    padding: 12px;
+    transform: translateY(-50%);
+    color: rgba(22, 24, 35, 0.34);
+    cursor: pointer;
+}
+
+.forgot-password {
+    color: rgba(22, 24, 35, 0.75);
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+.icon-eye {
+    width: 18px;
+    height: 16px;
+    // transition: all 0.3s ease 0s;
+}
+
+.error-input {
+    text-decoration: underline wavy rgb(255, 76, 58);
+}
+
+.continue {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    color: rgba(22, 24, 35, 0.34);
+    background-color: rgba(22, 24, 35, 0.06);
+    transition: all 0.3s ease 0s;
+    border-radius: 4px;
+    font-size: 16px;
+    line-height: 22px;
+    font-weight: 700;
+    min-height: 46px;
+    padding: 6px 8px;
+    margin-top: 20px;
+    outline: none;
+    pointer-events: none;
+    // margin-bottom: 10px;
+}
+
+.active {
+    border: none;
+    color: rgb(255, 255, 255);
+    background-color: rgb(254, 44, 85);
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+.code-error {
+    display: block;
+    color: rgb(255, 76, 58);
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+}
+
+.rotate-icon {
+    animation: rotateAnimation 1s infinite linear;
+}
+
+@keyframes rotateAnimation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

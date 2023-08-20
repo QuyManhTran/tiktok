@@ -1,19 +1,38 @@
 import classNames from 'classnames/bind';
 import styles from './LoginForm.mudule.scss';
 import WrapperForm from '../../../components/WrapperForm';
-import Button from '../../../components/Button';
-import {
-    FacebookIcon,
-    GoogleIcon,
-    LineIcon,
-    QRIcon,
-    TelegramIcon,
-    Twitter,
-    UserIcon,
-    WhatsAppIcon,
-} from '../../../components/Icon/Icons';
+import SelectionStep from './SelectionStep/SelectionStep';
+import { useEffect, useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAngleLeft } from '@fortawesome/free-solid-svg-icons';
+
 const cx = classNames.bind(styles);
 function LoginForm({ ...props }) {
+    const [allSteps, setAllSteps] = useState([{ component: SelectionStep }]);
+    const [CurrentStep, setCurrentStep] = useState(() => allSteps[allSteps.length - 1].component);
+
+    // function
+    const onChangeStep = (component) => {
+        console.log('hello');
+        if (typeof component !== 'function') {
+            alert('not a component');
+        } else {
+            setAllSteps((prev) => [...prev, { component: component }]);
+        }
+    };
+
+    const onBackStep = () => {
+        if (allSteps.length > 1) {
+            setAllSteps((prev) => [...prev.slice(0, prev.length - 1)]);
+        }
+    };
+
+    useEffect(() => {
+        if (CurrentStep) {
+            setCurrentStep(() => allSteps[allSteps.length - 1].component);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [allSteps]);
     return (
         <WrapperForm
             headTitle="Login to Tiktok"
@@ -22,73 +41,10 @@ function LoginForm({ ...props }) {
             privacy="Do you agree with our pirvacy in the term of using of Tiktok and confirming that you understood the policy of privacy of Tiktok"
             {...props}
         >
-            <div className={cx('login-methods')}>
-                <Button
-                    leftIcon={<QRIcon className={cx('method-icon')}></QRIcon>}
-                    className={cx('method-item')}
-                    classIcon={cx('span-icon')}
-                    classTitle={cx('span-title')}
-                >
-                    <span className={cx('text-method')}>Use QR code</span>
-                </Button>
-                <Button
-                    leftIcon={<UserIcon className={cx('method-icon')}></UserIcon>}
-                    className={cx('method-item')}
-                    classIcon={cx('span-icon')}
-                    classTitle={cx('span-title')}
-                >
-                    <span className={cx('text-method')}>Phone number / Email / TikTok ID</span>
-                </Button>
-                <Button
-                    leftIcon={<FacebookIcon className={cx('method-icon')}></FacebookIcon>}
-                    className={cx('method-item')}
-                    classIcon={cx('span-icon')}
-                    classTitle={cx('span-title')}
-                >
-                    <span className={cx('text-method')}>Continue with Facebook</span>
-                </Button>
-                <Button
-                    leftIcon={<GoogleIcon className={cx('method-icon')}></GoogleIcon>}
-                    className={cx('method-item')}
-                    classIcon={cx('span-icon')}
-                    classTitle={cx('span-title')}
-                >
-                    <span className={cx('text-method')}>Continue with Google</span>
-                </Button>
-                <Button
-                    leftIcon={<Twitter className={cx('method-icon')}></Twitter>}
-                    className={cx('method-item')}
-                    classIcon={cx('span-icon')}
-                    classTitle={cx('span-title')}
-                >
-                    <span className={cx('text-method')}>Continue with Twitter</span>
-                </Button>
-                <Button
-                    leftIcon={<WhatsAppIcon className={cx('method-icon')}></WhatsAppIcon>}
-                    className={cx('method-item')}
-                    classIcon={cx('span-icon')}
-                    classTitle={cx('span-title')}
-                >
-                    <span className={cx('text-method')}>Continue with WhatsApp</span>
-                </Button>
-                <Button
-                    leftIcon={<TelegramIcon className={cx('method-icon')}></TelegramIcon>}
-                    className={cx('method-item')}
-                    classIcon={cx('span-icon')}
-                    classTitle={cx('span-title')}
-                >
-                    <span className={cx('text-method')}>Continue with Telegram</span>
-                </Button>
-
-                <Button
-                    leftIcon={<LineIcon className={cx('method-icon')}></LineIcon>}
-                    className={cx('method-item')}
-                    classIcon={cx('span-icon')}
-                    classTitle={cx('span-title')}
-                >
-                    <span className={cx('text-method')}>Continue with LINE</span>
-                </Button>
-            </div>
+            {allSteps.length > 1 && (
+                <FontAwesomeIcon icon={faAngleLeft} className={cx('icon-back')} onClick={onBackStep}></FontAwesomeIcon>
+            )}
+            <CurrentStep onChangeStep={onChangeStep}></CurrentStep>
         </WrapperForm>
     );
 }

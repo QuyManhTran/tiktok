@@ -256,3 +256,29 @@
 }
 .role {
 }
+
+.caution-code {
+    position: absolute;
+    top: 50%;
+    right: 25%;
+    transform: translateY(-50%);
+    color: rgb(255, 76, 58);
+}
+.caution-icon {
+    width: 14px;
+    height: 14px;
+}
+.code-error {
+    display: block;
+    color: rgb(255, 76, 58);
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+}
+
+.caution-email {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    color: rgb(255, 76, 58);
+}

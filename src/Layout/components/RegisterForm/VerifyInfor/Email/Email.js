@@ -4,7 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useRef, useState } from 'react';
 import { useDebounce } from '../../../../../hooks';
-import { validatePassword } from './ValidateEmail';
+import { validateEmail, validatePassword } from './ValidateEmail';
+import { CautionIcon } from '../../../../../components/Icon/Icons';
 
 const cx = classNames.bind(styles);
 const delay = 500;
@@ -21,10 +22,14 @@ function Email({ isClickAll }) {
     const [isEnoughCharacterPass, setIsEnoughCharacterPass] = useState(false);
     const [isFocusPassword, setIsFocusPassword] = useState(false);
     const [isFocusCode, setIsFocusCode] = useState(false);
+    const [inputEmail, setInputEmail] = useState('');
+    const [isFocusEmail, setIsFocusEmail] = useState(false);
+    const [isErrorEmail, setIsErrorEmail] = useState(false);
 
     //handle check delay
     const codeDebounce = useDebounce(inputCode, delay);
     const passwordDebounce = useDebounce(inputPassword, delay);
+    const emailDebounce = useDebounce(inputEmail, delay);
     // function handle
     const isContainAlphabet = (text) => {
         return /[a-zA-Z]/.test(text);
@@ -50,6 +55,10 @@ function Email({ isClickAll }) {
         setIsFocusCode(false);
     };
 
+    const onBlurEmail = () => {
+        setIsFocusEmail(false);
+    };
+
     // UseEffect
     useEffect(() => {
         const isError =
@@ -69,14 +78,26 @@ function Email({ isClickAll }) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [passwordDebounce]);
 
-    useEffect(() => {}, [isErrorPassword]);
+    useEffect(() => {
+        const isError = !validateEmail.isEmail(emailDebounce) && emailDebounce.length > 0;
+        if (isError !== isErrorEmail) {
+            setIsErrorEmail(isError);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [emailDebounce]);
 
     // Call API
     const onSendCode = () => {
         // send email
-        // if (isClickAll && !isErrorPhoneNumber && phoneDebounce) {
-        //     alert('send phone number');
-        // }
+        if (
+            isClickAll &&
+            !isErrorEmail &&
+            !isErrorPassword &&
+            emailDebounce.length > 0 &&
+            passwordDebounce.length > 0
+        ) {
+            alert('send email');
+        }
     };
 
     const onNext = () => {
@@ -89,16 +110,34 @@ function Email({ isClickAll }) {
                 Email
                 <span className={cx('link-email')}>Register via phone number</span>
             </div>
-            <div className={cx('container-input')}>
+            <div
+                className={cx('container-input', {
+                    ['unpassed-border']: !isFocusEmail && isErrorEmail,
+                })}
+            >
                 <input
                     className={cx('input-box', {
-                        ['error-input']: false,
+                        ['error-input']: isFocusEmail && isErrorEmail,
+                        ['unpassed-validate']: !isFocusEmail && isErrorEmail,
                     })}
                     spellCheck={false}
                     type="text"
                     placeholder="Email address"
+                    value={inputEmail}
+                    onChange={(e) => {
+                        setIsErrorEmail(false);
+                        setInputEmail(e.target.value);
+                    }}
+                    onFocus={() => setIsFocusEmail(true)}
+                    onBlur={onBlurEmail}
                 ></input>
+                {!isFocusEmail && isErrorEmail && (
+                    <div className={cx('caution-email')}>
+                        <CautionIcon className={cx('caution-icon')}></CautionIcon>
+                    </div>
+                )}
             </div>
+            {!isFocusEmail && isErrorEmail && <span className={cx('code-error')}>Email address is invalid!</span>}
             <div
                 className={cx('container-input', {
                     ['unpassed-border']: !isFocusPassword && isErrorPassword,
@@ -112,7 +151,9 @@ function Email({ isClickAll }) {
                     type={isHiddenPassword ? 'password' : 'text'}
                     placeholder="Password"
                     value={inputPassword}
-                    onChange={(e) => setInputPassword(e.target.value)}
+                    onChange={(e) => {
+                        setInputPassword(e.target.value);
+                    }}
                     onFocus={() => setIsFocusPassword(true)}
                     onBlur={onBlurPassword}
                 ></input>
@@ -173,16 +214,30 @@ function Email({ isClickAll }) {
                     onFocus={() => setIsFocusCode(true)}
                     onBlur={onBlurCode}
                 ></input>
+                {!isFocusCode && isErrorCode && (
+                    <div className={cx('caution-code')}>
+                        <CautionIcon className={cx('caution-icon')}></CautionIcon>
+                    </div>
+                )}
                 <button
                     className={cx('send-code', {
                         // eslint-disable-next-line no-useless-computed-key
-                        ['send-allow']: false,
+                        ['send-allow']:
+                            isClickAll &&
+                            !isErrorEmail &&
+                            !isErrorPassword &&
+                            emailDebounce.length > 0 &&
+                            passwordDebounce.length > 0,
                     })}
                     onClick={onSendCode}
                 >
                     Send
                 </button>
             </div>
+            {!isFocusCode && isErrorCode && (
+                <span className={cx('code-error')}>Code must be accurate with 6 digits</span>
+            )}
+
             <div className={cx('commitee')}>
                 <input
                     type="checkbox"
@@ -199,7 +254,15 @@ function Email({ isClickAll }) {
             </div>
             <button
                 className={cx('continue', {
-                    active: false,
+                    active:
+                        isClickAll &&
+                        !isErrorEmail &&
+                        !isErrorPassword &&
+                        !isErrorCode &&
+                        inputCode.length === maxCodeLength &&
+                        emailDebounce.length > 0 &&
+                        passwordDebounce.length > 0 &&
+                        isChecked,
                 })}
                 onClick={onNext}
             >

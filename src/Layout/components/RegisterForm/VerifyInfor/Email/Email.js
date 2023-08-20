@@ -10,7 +10,7 @@ import { CautionIcon } from '../../../../../components/Icon/Icons';
 const cx = classNames.bind(styles);
 const delay = 500;
 const maxCodeLength = 6;
-function Email({ isClickAll }) {
+function Email({ isClickAll, alternativeMethod, onStep }) {
     const passwordRef = useRef();
     const [isChecked, setIsChecked] = useState(false);
     const [isHiddenPassword, setIsHiddenPassword] = useState(true);
@@ -101,14 +101,16 @@ function Email({ isClickAll }) {
     };
 
     const onNext = () => {
-        alert('next');
+        onStep();
     };
 
     return (
         <div className={cx('wrapper')}>
             <div className={cx('title')}>
                 Email
-                <span className={cx('link-email')}>Register via phone number</span>
+                <span className={cx('link-email')} onClick={alternativeMethod}>
+                    Register via phone number
+                </span>
             </div>
             <div
                 className={cx('container-input', {
@@ -157,6 +159,11 @@ function Email({ isClickAll }) {
                     onFocus={() => setIsFocusPassword(true)}
                     onBlur={onBlurPassword}
                 ></input>
+                {!isFocusPassword && isErrorPassword && (
+                    <div className={cx('caution-password')}>
+                        <CautionIcon className={cx('caution-icon')}></CautionIcon>
+                    </div>
+                )}
                 <div className={cx('wrapper-eye')} onClick={() => setIsHiddenPassword(!isHiddenPassword)}>
                     {!isHiddenPassword && <FontAwesomeIcon icon={faEye} className={cx('icon-eye')} />}
                     {isHiddenPassword && <FontAwesomeIcon icon={faEyeSlash} className={cx('icon-eye')} />}

@@ -43,26 +43,6 @@
     height: 44px;
     line-height: 100%;
 }
-.area-number {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: relative;
-    padding: 12px;
-    height: 44px;
-    cursor: pointer;
-    min-width: 105px;
-}
-
-.separate {
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    height: 70%;
-    width: 0.5px;
-    background-color: rgba(22, 24, 35, 0.12);
-}
 
 .input-box {
     display: block;
@@ -116,43 +96,6 @@
     background-color: rgb(254, 44, 85);
     cursor: pointer;
     pointer-events: auto;
-}
-
-.nation-codes {
-    position: absolute;
-    overflow: auto;
-    display: none;
-    top: 50px;
-    left: 0px;
-    right: 0px;
-    width: 240px;
-    max-height: 320px;
-    border-radius: 4px;
-    background: rgb(255, 255, 255);
-    box-shadow: rgba(0, 0, 0, 0.12) 0px 2px 12px;
-    z-index: 12;
-    transition: display 0.3s ease 0s;
-}
-
-.nation-codes::-webkit-scrollbar {
-    width: 4px;
-}
-
-.code-item {
-    padding: 0px 12px;
-    display: flex;
-    align-items: center;
-    color: rgb(22, 24, 35);
-    height: 34px;
-    line-height: 34px;
-    font-size: 1.3rem;
-    &:hover {
-        background-color: rgba(22, 24, 35, 0.03);
-    }
-}
-
-.see-code {
-    display: block;
 }
 
 .commitee {
@@ -254,8 +197,6 @@
 .unpassed-input_boder {
     border: 1px solid rgb(255, 76, 58);
 }
-.role {
-}
 
 .caution-code {
     position: absolute;
@@ -279,6 +220,14 @@
     position: absolute;
     top: 50%;
     right: 12px;
+    transform: translateY(-50%);
+    color: rgb(255, 76, 58);
+}
+
+.caution-password {
+    position: absolute;
+    top: 50%;
+    right: calc(15% - 8px);
     transform: translateY(-50%);
     color: rgb(255, 76, 58);
 }

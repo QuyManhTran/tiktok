@@ -8,7 +8,7 @@ import { codeCountries } from '../../../../../asset/data/formData';
 const cx = classNames.bind(styles);
 const delay = 500;
 const maxCodeLength = 6;
-function PhoneNumber({ isClickAll }) {
+function PhoneNumber({ isClickAll, alternativeMethod, onStep }) {
     const [isSeeCode, SetIsSeeCode] = useState(false);
     const [inputPhoneNumber, setInputPhoneNumber] = useState('');
     const [isErrorPhoneNumber, setIsErrorPhoneNumber] = useState(false);
@@ -17,7 +17,6 @@ function PhoneNumber({ isClickAll }) {
     const [nationCode, setNationCode] = useState('VN +84');
     //handle check delay
     const phoneDebounce = useDebounce(inputPhoneNumber, delay);
-
     // function handle
     const isContainAlphabet = (text) => {
         return /[a-zA-Z]/.test(text);
@@ -29,7 +28,7 @@ function PhoneNumber({ isClickAll }) {
     };
 
     const onInputCode = (input) => {
-        const isError = input.length === 0 || input.length > maxCodeLength;
+        const isError = input.length !== maxCodeLength;
         setIsErrorCode(isError);
     };
 
@@ -45,7 +44,6 @@ function PhoneNumber({ isClickAll }) {
 
     const onRemoveDisplay = (e) => {
         if (isSeeCode) {
-            console.log('oke');
             SetIsSeeCode(!isSeeCode);
         }
     };
@@ -58,7 +56,7 @@ function PhoneNumber({ isClickAll }) {
     };
 
     const onNext = () => {
-        alert('next');
+        onStep();
     };
 
     useEffect(() => {
@@ -74,7 +72,9 @@ function PhoneNumber({ isClickAll }) {
         <div className={cx('wrapper')} onClick={onRemoveDisplay}>
             <div className={cx('title')}>
                 Mobile Phone
-                <span className={cx('link-email')}>Register via email</span>
+                <span className={cx('link-email')} onClick={alternativeMethod}>
+                    Register via email
+                </span>
             </div>
             <div className={cx('container-input')}>
                 <div className={cx('area-number')} onClick={onSeeNation}>

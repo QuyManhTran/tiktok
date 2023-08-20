@@ -6,9 +6,10 @@ import { useState, memo } from 'react';
 import { months, allDay, allYear } from '../../../../asset/data/formData';
 import PhoneNumber from './PhoneNumber';
 import Email from './Email/Email';
+import WellCome from '../WellCome/WellCome';
 const cx = classNames.bind(styles);
 
-function VerifyInfor() {
+function VerifyInfor({ onChangeStep }) {
     const [month, setMonth] = useState('Month');
     const [day, setDay] = useState('Day');
     const [year, setYear] = useState('Year');
@@ -18,6 +19,7 @@ function VerifyInfor() {
     const [isClickMonth, setIsClickMonth] = useState(false);
     const [isClickDay, setIsClickDay] = useState(false);
     const [isClickYear, setIsClickYear] = useState(false);
+    const [isDefaultNumber, setIsDefaultNumber] = useState(true);
     const onSetDate = (id, e) => {
         e.stopPropagation();
         switch (id) {
@@ -71,6 +73,14 @@ function VerifyInfor() {
                 setIsClickYear(true);
             }
         }
+    };
+
+    const alternativeMethod = () => {
+        setIsDefaultNumber(!isDefaultNumber);
+    };
+
+    const onStep = () => {
+        onChangeStep(WellCome);
     };
 
     return (
@@ -147,7 +157,20 @@ function VerifyInfor() {
                 </div>
                 <p className={cx('policy')}>Your date won't be displayed publicly</p>
             </header>
-            <Email isClickAll={isClickDay && isClickMonth && isClickYear}></Email>
+            {isDefaultNumber && (
+                <PhoneNumber
+                    isClickAll={isClickDay && isClickMonth && isClickYear}
+                    alternativeMethod={alternativeMethod}
+                    onStep={onStep}
+                ></PhoneNumber>
+            )}
+            {!isDefaultNumber && (
+                <Email
+                    isClickAll={isClickDay && isClickMonth && isClickYear}
+                    alternativeMethod={alternativeMethod}
+                    onStep={onStep}
+                ></Email>
+            )}
         </div>
     );
 }

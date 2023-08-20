@@ -1,0 +1,52 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    .method-item {
+        margin-left: 0;
+        padding: 0;
+        border-radius: 0;
+    }
+}
+
+.select-register {
+    .method-item {
+        width: 100%;
+    }
+}
+
+.method-item {
+    position: relative;
+    height: 44px;
+    font-weight: 600;
+    font-size: 1.5rem;
+    margin-bottom: 16px;
+    border: 1px solid rgba(22, 24, 35, 0.12);
+    .span-title {
+        margin-left: 0;
+    }
+}
+
+.method-icon {
+    top: 0;
+    left: 16px;
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    transform: translateY(55%);
+}
+
+.text-method {
+    margin-left: 0px;
+}
+.span-icon {
+    width: 0;
+}
+
+.angle-down {
+    display: block;
+    width: 100%;
+    font-size: 2rem;
+    color: #161823;
+    padding: 6px 0;
+}

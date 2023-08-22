@@ -1,6 +1,8 @@
 import classNames from 'classnames/bind';
 import styles from './ContentVideo.mudule.scss';
 import Tippy from '@tippyjs/react/headless';
+import { connect } from 'react-redux';
+import homeDispatchs from '../../../store/actions/homeDispatchs';
 import { Wrapper as OptionWrapper } from '../../Popper';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisH, faPause, faPlay } from '@fortawesome/free-solid-svg-icons';
@@ -9,19 +11,16 @@ import { useEffect, useRef, useState } from 'react';
 import Button from '../../Button';
 
 const cx = classNames.bind(styles);
-function ContentVideo({
-    index,
-    data,
-    autoPlay,
-    isAutoMute,
-    isDefaultOutOfScreen,
-    syncVolume,
-    prevSyncVolume,
-    onGlobalPrevValume,
-    onGlobalMute,
-    onGlobalVolume,
-    loadMoreVideo,
-}) {
+function ContentVideo({ index, data, autoPlay, isDefaultOutOfScreen, loadMoreVideo, ...props }) {
+    // redux
+    const volumeData = props.volumeData;
+    const isAutoMute = volumeData.isAutoMute;
+    const syncVolume = volumeData.syncVolume;
+    const prevSyncVolume = volumeData.prevSyncVolume;
+    const onGlobalMute = props.onGlobalMute;
+    const onGlobalVolume = props.onGlobalVolume;
+    const onGlobalPrevValume = props.onGlobalPrevValume;
+    // useRef
     const playController = useRef();
     const volumeBar = useRef();
     const volumeSlider = useRef();
@@ -301,5 +300,9 @@ function ContentVideo({
         </div>
     );
 }
+const mapStateToProps = (state) => {
+    return { volumeData: state };
+};
 
-export default ContentVideo;
+const mapDispatchToProps = homeDispatchs;
+export default connect(mapStateToProps, mapDispatchToProps)(ContentVideo);

@@ -5,10 +5,12 @@ import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
 import { useDebounce } from '../../../../../hooks';
 import { codeCountries } from '../../../../../asset/data/formData';
+import { RotateIcon } from '../../../../../components/Icon/Icons';
 const cx = classNames.bind(styles);
 const delay = 500;
 const maxCodeLength = 6;
 function PhoneNumber({ isClickAll, alternativeMethod, onStep }) {
+    const [isSend, setIsSend] = useState(false);
     const [isSeeCode, SetIsSeeCode] = useState(false);
     const [inputPhoneNumber, setInputPhoneNumber] = useState('');
     const [isErrorPhoneNumber, setIsErrorPhoneNumber] = useState(false);
@@ -56,7 +58,7 @@ function PhoneNumber({ isClickAll, alternativeMethod, onStep }) {
     };
 
     const onNext = () => {
-        onStep();
+        setIsSend(true);
     };
 
     useEffect(() => {
@@ -68,6 +70,16 @@ function PhoneNumber({ isClickAll, alternativeMethod, onStep }) {
         onInputCode(inputCode);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [inputCode]);
+
+    useEffect(() => {
+        if (isSend) {
+            const sendTimeOut = setTimeout(() => {
+                setIsSend(false);
+                onStep();
+            }, 2000);
+            return () => clearTimeout(sendTimeOut);
+        }
+    }, [isSend]);
     return (
         <div className={cx('wrapper')} onClick={onRemoveDisplay}>
             <div className={cx('title')}>
@@ -142,7 +154,7 @@ function PhoneNumber({ isClickAll, alternativeMethod, onStep }) {
                 })}
                 onClick={onNext}
             >
-                Next
+                {!isSend ? 'Next' : <RotateIcon className="rotate-icon"></RotateIcon>}
             </button>
         </div>
     );

@@ -104,6 +104,9 @@
 }
 
 .continue {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100%;
     color: rgba(22, 24, 35, 0.34);
     background-color: rgba(22, 24, 35, 0.06);

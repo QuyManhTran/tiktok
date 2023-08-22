@@ -2,6 +2,8 @@ import classNames from 'classnames/bind';
 import styles from './Button.module.scss';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import defaultDispatchs from '../../store/actions/defaultDispatch';
 const cx = classNames.bind(styles);
 function Button({
     to,
@@ -25,8 +27,7 @@ function Button({
 }) {
     let Comp = 'button';
     const props = {
-        onClick,
-        ...passProps,
+        onClick: passProps.isLogin ? onClick : passProps.openModal,
     };
     if (to) {
         props.to = to;
@@ -104,4 +105,9 @@ Button.propTypes = {
     onClick: PropTypes.func,
 };
 
-export default Button;
+const mapStateToProps = (state) => {
+    return { isLogin: state.isLogin };
+};
+
+const mapDispatchToProps = defaultDispatchs;
+export default connect(mapStateToProps, mapDispatchToProps)(Button);

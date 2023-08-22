@@ -5,13 +5,13 @@ import { faCheck, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useRef, useState } from 'react';
 import { useDebounce } from '../../../../../hooks';
 import { validateEmail, validatePassword } from './ValidateEmail';
-import { CautionIcon } from '../../../../../components/Icon/Icons';
+import { CautionIcon, RotateIcon } from '../../../../../components/Icon/Icons';
 
 const cx = classNames.bind(styles);
 const delay = 500;
 const maxCodeLength = 6;
 function Email({ isClickAll, alternativeMethod, onStep }) {
-    const passwordRef = useRef();
+    const [isSend, setIsSend] = useState(false);
     const [isChecked, setIsChecked] = useState(false);
     const [isHiddenPassword, setIsHiddenPassword] = useState(true);
     const [isErrorCode, setIsErrorCode] = useState(false);
@@ -86,6 +86,16 @@ function Email({ isClickAll, alternativeMethod, onStep }) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [emailDebounce]);
 
+    useEffect(() => {
+        if (isSend) {
+            const sendTimeOut = setTimeout(() => {
+                setIsSend(false);
+                onStep();
+            }, 2000);
+            return () => clearTimeout(sendTimeOut);
+        }
+    }, [isSend]);
+
     // Call API
     const onSendCode = () => {
         // send email
@@ -101,7 +111,7 @@ function Email({ isClickAll, alternativeMethod, onStep }) {
     };
 
     const onNext = () => {
-        onStep();
+        setIsSend(true);
     };
 
     return (
@@ -273,7 +283,7 @@ function Email({ isClickAll, alternativeMethod, onStep }) {
                 })}
                 onClick={onNext}
             >
-                Next
+                {!isSend ? 'Next' : <RotateIcon className="rotate-icon"></RotateIcon>}
             </button>
         </div>
     );

@@ -97,3 +97,17 @@ body {
     src: url('../../asset/fonts/TikTokFont-Bold.woff2');
     font-weight: 700;
 }
+
+// Key frame
+.rotate-icon {
+    animation: rotateAnimation 1s infinite linear;
+}
+
+@keyframes rotateAnimation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

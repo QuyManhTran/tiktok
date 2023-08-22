@@ -1,3 +1,4 @@
+import { Provider, connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Button from '../../components/Button';
 import Header from '../components/Header';
@@ -6,16 +7,17 @@ import styles from './DefaultLayout.module.scss';
 import classNames from 'classnames/bind';
 import { faForwardStep } from '@fortawesome/free-solid-svg-icons';
 import { Fragment, useEffect, useRef, useState } from 'react';
-import WrapperForm from '../../components/WrapperForm/WrapperForm';
-import LoginForm from '../components/LoginForm';
-import RegisterForm from '../components/RegisterForm';
+import defaultDispatchs from '../../store/actions/defaultDispatch';
+import { legacy_createStore as createStore } from 'redux';
+import videoReducer from '../../store/reducers/videoReducer';
+import Modal from '../../components/Modal/Modal';
 const cx = classNames.bind(styles);
-function DefaultLayout({ children }) {
+function DefaultLayout({ children, ...store }) {
+    const videoStore = createStore(videoReducer);
     const [isScroll, setIsScroll] = useState(false);
     const [isFirst, setIsfirst] = useState(0);
-    const [isModal, setIsModal] = useState(false);
-    const [isLogin, setIsLogin] = useState(false);
     const backBtn = useRef();
+    const isModal = store.isModal;
     useEffect(() => {
         const listenWindow = () => {
             if (window.scrollY > 0 && !isScroll) {
@@ -35,44 +37,23 @@ function DefaultLayout({ children }) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isScroll]);
 
-    const onModal = () => {
-        if (!isModal) {
-            document.body.style.overflow = 'hidden';
-            document.body.style.paddingRight = '8px';
-        } else {
-            document.body.style.overflow = 'auto';
-            document.body.style.paddingRight = '0px';
-        }
-        setIsModal(!isModal);
-    };
-
     const onComeBack = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
-    const onChangeMethod = () => {
-        setIsLogin(!isLogin);
-    };
-
-    const onRemoveModal = () => {
-        setIsLogin(false);
-        onModal();
-    };
-
-    const props = {
-        onChangeMethod,
-        onRemoveModal,
-    };
+    const openModal = store.openModal;
 
     return (
         <Fragment>
             <div className={cx('wrapper')}>
-                <Header onModal={onModal} />
+                <Header openModal={openModal} currentUser={store.isLogin} />
                 <div className={cx('container')}>
                     <div className={cx('side-bar')}>
                         <Sidebar />
                     </div>
-                    <div className={cx('content')}>{children}</div>
+                    <Provider store={videoStore}>
+                        <div className={cx('content')}>{children}</div>
+                    </Provider>
                     {isFirst === 1 && (
                         <div
                             className={cx('back-first-page', {
@@ -95,13 +76,14 @@ function DefaultLayout({ children }) {
                     )}
                 </div>
             </div>
-            {isModal && (
-                <div className={cx('modal')} onClick={onRemoveModal}>
-                    {!isLogin && <LoginForm {...props}></LoginForm>}
-                    {isLogin && <RegisterForm {...props}></RegisterForm>}
-                </div>
-            )}
+            {isModal && <Modal></Modal>}
         </Fragment>
     );
 }
-export default DefaultLayout;
+
+const mapStateToProps = (state) => {
+    return { isLogin: state.isLogin, isModal: state.isModal };
+};
+
+const mapDispatchToProps = defaultDispatchs;
+export default connect(mapStateToProps, mapDispatchToProps)(DefaultLayout);

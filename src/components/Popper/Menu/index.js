@@ -5,11 +5,16 @@ import { Wrapper as PopperWrapper } from '../index';
 import MenuItem from './MenuItem';
 import HeaderMenu from './HeaderMenu';
 import { useState } from 'react';
+import { connect } from 'react-redux';
+import defaultDispatchs from '../../../store/actions/defaultDispatch';
 
 const cx = classNames.bind(styles);
-function Menu({ children, items, onChange = () => {} }) {
+function Menu({ children, items, onChange = () => {}, ...props }) {
     const [history, setHistory] = useState([{ data: items }]);
     const current = history[history.length - 1];
+    if (JSON.stringify(items) !== JSON.stringify(history[0].data)) {
+        setHistory([{ data: items }]);
+    }
     const renderItems = () => {
         return current.data.map((item, index) => {
             const isParent = !!item.children;
@@ -22,6 +27,9 @@ function Menu({ children, items, onChange = () => {} }) {
                             setHistory((preHistory) => [...preHistory, item.children]);
                         } else {
                             setHistory(onChange(item, history));
+                        }
+                        if (index === current.data.length - 1) {
+                            props.onLogOut();
                         }
                     }}
                 ></MenuItem>
@@ -58,5 +66,5 @@ function Menu({ children, items, onChange = () => {} }) {
         </Tippy>
     );
 }
-
-export default Menu;
+const mapDispatchToProps = defaultDispatchs;
+export default connect(null, mapDispatchToProps)(Menu);

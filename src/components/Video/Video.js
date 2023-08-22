@@ -6,19 +6,7 @@ import ActionItems from './ActionItems';
 
 const cx = classNames.bind(styles);
 
-function Video({
-    index,
-    data,
-    autoPlay,
-    isAutoMute,
-    isDefaultOutOfScreen,
-    syncVolume,
-    prevSyncVolume,
-    onGlobalMute,
-    onGlobalVolume,
-    onGlobalPrevValume,
-    loadMoreVideo,
-}) {
+function Video({ index, data, autoPlay, isDefaultOutOfScreen, loadMoreVideo }) {
     return (
         <div className={cx('video')}>
             <HeaderVideo data={data}></HeaderVideo>
@@ -26,13 +14,7 @@ function Video({
                 <ContentVideo
                     data={data}
                     autoPlay={autoPlay}
-                    isAutoMute={isAutoMute}
-                    onGlobalMute={onGlobalMute}
                     isDefaultOutOfScreen={isDefaultOutOfScreen}
-                    onGlobalVolume={onGlobalVolume}
-                    syncVolume={syncVolume}
-                    prevSyncVolume={prevSyncVolume}
-                    onGlobalPrevValume={onGlobalPrevValume}
                     index={index}
                     loadMoreVideo={loadMoreVideo}
                 ></ContentVideo>

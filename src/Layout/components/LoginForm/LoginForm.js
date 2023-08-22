@@ -13,7 +13,6 @@ function LoginForm({ ...props }) {
 
     // function
     const onChangeStep = (component) => {
-        console.log('hello');
         if (typeof component !== 'function') {
             alert('not a component');
         } else {
@@ -44,7 +43,7 @@ function LoginForm({ ...props }) {
             {allSteps.length > 1 && (
                 <FontAwesomeIcon icon={faAngleLeft} className={cx('icon-back')} onClick={onBackStep}></FontAwesomeIcon>
             )}
-            <CurrentStep onChangeStep={onChangeStep}></CurrentStep>
+            <CurrentStep onChangeStep={onChangeStep} {...props}></CurrentStep>
         </WrapperForm>
     );
 }

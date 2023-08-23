@@ -301,7 +301,13 @@ function ContentVideo({ index, data, autoPlay, isDefaultOutOfScreen, loadMoreVid
     );
 }
 const mapStateToProps = (state) => {
-    return { volumeData: state };
+    return {
+        volumeData: {
+            isAutoMute: state.isAutoMute,
+            syncVolume: state.syncVolume,
+            prevSyncVolume: state.prevSyncVolume,
+        },
+    };
 };
 
 const mapDispatchToProps = homeDispatchs;

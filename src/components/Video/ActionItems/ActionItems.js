@@ -19,9 +19,11 @@ import { EmbedIcon, SendIcon, WhatsAppIcon, CopyLinkIcon, FacebookIcon } from '.
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
+import { connect } from 'react-redux';
+import defaultDispatchs from '../../../store/actions/defaultDispatch';
 
 const cx = classNames.bind(styles);
-function ActionItems({ data }) {
+function ActionItems({ data, ...props }) {
     const [isShowAll, setIsShowAll] = useState(false);
     // eslint-disable-next-line no-unused-vars
     const [allData, setAllData] = useState(data);
@@ -90,11 +92,23 @@ function ActionItems({ data }) {
     };
     return (
         <div className={cx('wrapper')}>
-            <ActionItem icon={<HeartIcon></HeartIcon>} active={cx('red-active')}>
+            <ActionItem
+                icon={<HeartIcon></HeartIcon>}
+                active={cx('red-active')}
+                isLogin={props.isLogin}
+                openModal={props.openModal}
+            >
                 {allData.likes_count}
             </ActionItem>
-            <ActionItem icon={<CommentIcon></CommentIcon>}>{allData.comments_count}</ActionItem>
-            <ActionItem icon={<FavoriteIcon></FavoriteIcon>} active={cx('yellow-active')}>
+            <ActionItem icon={<CommentIcon></CommentIcon>} isLogin={props.isLogin} openModal={props.openModal}>
+                {allData.comments_count}
+            </ActionItem>
+            <ActionItem
+                icon={<FavoriteIcon></FavoriteIcon>}
+                active={cx('yellow-active')}
+                isLogin={props.isLogin}
+                openModal={props.openModal}
+            >
                 {allData.views_count}
             </ActionItem>
             <Tippy
@@ -106,11 +120,17 @@ function ActionItems({ data }) {
                 onHidden={onHiddenAll}
             >
                 <div>
-                    <ActionItem icon={<ShareIcon></ShareIcon>}>{allData.shares_count}</ActionItem>
+                    <ActionItem icon={<ShareIcon></ShareIcon>} isLogin={props.isLogin} openModal={props.openModal}>
+                        {allData.shares_count}
+                    </ActionItem>
                 </div>
             </Tippy>
         </div>
     );
 }
+const mapStateToProps = (state) => {
+    return { isLogin: state.isLogin, isModal: state.isModal };
+};
 
-export default ActionItems;
+const mapDispatchToProps = defaultDispatchs;
+export default connect(mapStateToProps, mapDispatchToProps)(ActionItems);

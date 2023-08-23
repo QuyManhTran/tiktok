@@ -9,9 +9,9 @@ import { hashtags } from '../../../asset/data/hashTagData';
 
 import { useState } from 'react';
 const cx = classNames.bind(styles);
-function HeaderVideo(data) {
+function HeaderVideo({ data }) {
     // eslint-disable-next-line no-unused-vars
-    const [allData, setAllData] = useState(data.data);
+    const [allData, setAllData] = useState(data);
     // eslint-disable-next-line no-unused-vars
     const [currentUser, setCurrentUser] = useState(allData.user);
     const [isFollowed, setIsFollowed] = useState(currentUser.is_followed);

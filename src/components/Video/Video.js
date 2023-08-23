@@ -6,10 +6,10 @@ import ActionItems from './ActionItems';
 
 const cx = classNames.bind(styles);
 
-function Video({ index, data, autoPlay, isDefaultOutOfScreen, loadMoreVideo }) {
+function Video({ index, data, autoPlay, isDefaultOutOfScreen, loadMoreVideo, openModal }) {
     return (
         <div className={cx('video')}>
-            <HeaderVideo data={data}></HeaderVideo>
+            <HeaderVideo data={data} openModal={openModal}></HeaderVideo>
             <div className={cx('wrapper-content')}>
                 <ContentVideo
                     data={data}

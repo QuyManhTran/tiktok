@@ -1,4 +1,4 @@
-import { Provider, connect } from 'react-redux';
+import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Button from '../../components/Button';
 import Header from '../components/Header';
@@ -8,16 +8,15 @@ import classNames from 'classnames/bind';
 import { faForwardStep } from '@fortawesome/free-solid-svg-icons';
 import { Fragment, useEffect, useRef, useState } from 'react';
 import defaultDispatchs from '../../store/actions/defaultDispatch';
-import { legacy_createStore as createStore } from 'redux';
-import videoReducer from '../../store/reducers/videoReducer';
 import Modal from '../../components/Modal/Modal';
+
 const cx = classNames.bind(styles);
 function DefaultLayout({ children, ...store }) {
-    const videoStore = createStore(videoReducer);
     const [isScroll, setIsScroll] = useState(false);
     const [isFirst, setIsfirst] = useState(0);
     const backBtn = useRef();
     const isModal = store.isModal;
+    const openModal = store.openModal;
     useEffect(() => {
         const listenWindow = () => {
             if (window.scrollY > 0 && !isScroll) {
@@ -41,8 +40,6 @@ function DefaultLayout({ children, ...store }) {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
-    const openModal = store.openModal;
-
     return (
         <Fragment>
             <div className={cx('wrapper')}>
@@ -51,9 +48,9 @@ function DefaultLayout({ children, ...store }) {
                     <div className={cx('side-bar')}>
                         <Sidebar />
                     </div>
-                    <Provider store={videoStore}>
-                        <div className={cx('content')}>{children}</div>
-                    </Provider>
+
+                    <div className={cx('content')}>{children}</div>
+
                     {isFirst === 1 && (
                         <div
                             className={cx('back-first-page', {
@@ -63,7 +60,7 @@ function DefaultLayout({ children, ...store }) {
                             ref={backBtn}
                             onClick={onComeBack}
                         >
-                            <Button small primary className={cx('back-btn')}>
+                            <Button small primary back className={cx('back-btn')}>
                                 {
                                     <FontAwesomeIcon
                                         icon={faForwardStep}

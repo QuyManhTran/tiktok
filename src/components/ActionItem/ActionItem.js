@@ -3,10 +3,14 @@ import styles from './ActionItem.module.scss';
 import { useState } from 'react';
 
 const cx = classNames.bind(styles);
-function ActionItem({ children, icon, active }) {
+function ActionItem({ children, icon, active, isLogin, openModal }) {
     const [isActive, setIsActive] = useState(false);
     const handleActive = (e) => {
-        if (active) setIsActive(!isActive);
+        if (isLogin) {
+            if (active) setIsActive(!isActive);
+        } else {
+            openModal();
+        }
     };
     return (
         <div className={cx('wrapper')}>

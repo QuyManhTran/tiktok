@@ -19,6 +19,7 @@ function Button({
     disabled = false,
     rounded = false,
     following = false,
+    back = false,
     className,
     classIcon,
     classTitle,
@@ -29,6 +30,9 @@ function Button({
     const props = {
         onClick: passProps.isLogin ? onClick : passProps.openModal,
     };
+    if (back) {
+        props.onClick = onClick;
+    }
     if (to) {
         props.to = to;
         Comp = Link;

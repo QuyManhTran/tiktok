@@ -44,7 +44,11 @@ function Home({ ...props }) {
     );
 }
 const mapStateToProps = (state) => {
-    return { data: state };
+    return {
+        data: {
+            isDefaultOutOfScreen: state.isDefaultOutOfScreen,
+        },
+    };
 };
 
 const mapDispatchToProps = homeDispatchs;

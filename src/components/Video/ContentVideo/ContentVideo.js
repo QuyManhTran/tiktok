@@ -6,37 +6,36 @@ import homeDispatchs from '../../../store/actions/homeDispatchs';
 import { Wrapper as OptionWrapper } from '../../Popper';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisH, faPause, faPlay } from '@fortawesome/free-solid-svg-icons';
-import { BrokenHeartIcon, ReportIcon, Volume, XmarkVolume } from '../../Icon';
+import { BrokenHeartIcon, ReportIcon, VolumeIcon, XmarkVolume } from '../../Icon';
 import { useEffect, useRef, useState } from 'react';
 import Button from '../../Button';
 import { Link } from 'react-router-dom';
+import Volume from '../../Volume/Volume';
 
 const cx = classNames.bind(styles);
 function ContentVideo({ index, data, autoPlay, isDefaultOutOfScreen, loadMoreVideo, ...props }) {
-    // redux
     const volumeData = props.volumeData;
     const isAutoMute = volumeData.isAutoMute;
     const syncVolume = volumeData.syncVolume;
-    const prevSyncVolume = volumeData.prevSyncVolume;
-    const onGlobalMute = props.onGlobalMute;
-    const onGlobalVolume = props.onGlobalVolume;
-    const onGlobalPrevValume = props.onGlobalPrevValume;
     // useRef
     const playController = useRef();
-    const volumeBar = useRef();
-    const volumeSlider = useRef();
     // eslint-disable-next-line no-unused-vars
     const [allData, setAllData] = useState(data);
     const [isMount, setIsMount] = useState(isDefaultOutOfScreen);
     const [isEnter, setIsEnter] = useState(false);
     const [isEnterTippy, setIsEnterTippy] = useState(false);
     const [isPlaying, setIsPlaying] = useState(autoPlay);
-    const [volumeValue, setVolumeValue] = useState(syncVolume);
     const [isEnterProgress, setEnterProGress] = useState(false);
     const [isMouseDown, setIsMouseDown] = useState(false);
     const [posSlider, setPosSlider] = useState(0);
     const [totalTime, setTotalTime] = useState('');
     const [currentTime, setCurrentTime] = useState('00:00');
+
+    useEffect(() => {
+        if (playController.current) {
+            playController.current.volume = syncVolume;
+        }
+    });
 
     useEffect(() => {
         if (isMount && (index + 2) % 15 === 0) {
@@ -60,18 +59,6 @@ function ContentVideo({ index, data, autoPlay, isDefaultOutOfScreen, loadMoreVid
             setIsPlaying(false);
         }
     }, [isMount]);
-
-    useEffect(() => {
-        playController.current.volume = syncVolume;
-        if (volumeBar.current) {
-            volumeBar.current.style.height = `${syncVolume * 100}%`;
-        }
-        if (volumeSlider.current) {
-            volumeSlider.current.style.top = `${(1 - syncVolume) * 80}%`;
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [volumeValue]);
-
     // handle functions
     useEffect(() => {
         const listenWindow = () => {
@@ -109,28 +96,6 @@ function ContentVideo({ index, data, autoPlay, isDefaultOutOfScreen, loadMoreVid
                         </Button>
                     </div>
                 </OptionWrapper>
-            </div>
-        );
-    };
-
-    const renderVolumeController = (attrs) => {
-        return (
-            <div tabIndex="-1" {...attrs}>
-                <div className={cx('adjust-volume')}>
-                    <div className={cx('wrapper-volume')} onMouseUp={handleVolumeUp}>
-                        <div
-                            className={cx('volume-bar')}
-                            ref={volumeBar}
-                            style={{ height: `${syncVolume * 100}%` }}
-                        ></div>
-                        <div
-                            className={cx('volume-slider')}
-                            ref={volumeSlider}
-                            style={{ top: `${(1 - syncVolume) * 80}%` }}
-                            onMouseUp={(e) => e.stopPropagation()}
-                        ></div>
-                    </div>
-                </div>
             </div>
         );
     };
@@ -176,46 +141,9 @@ function ContentVideo({ index, data, autoPlay, isDefaultOutOfScreen, loadMoreVid
         return `0${minute}:${second < 10 ? `0${second}` : second}`;
     };
 
-    // handle volume
-
-    const handleVolumeUp = (e) => {
-        const elementRect = e.target.getBoundingClientRect();
-        const currentPosY = e.clientY;
-        let currentPercent = (elementRect.height - currentPosY + elementRect.y) / elementRect.height;
-        if (currentPercent < 0.1) {
-            currentPercent = 0;
-            onGlobalPrevValume(syncVolume);
-            onGlobalMute(true);
-        } else {
-            currentPercent = currentPercent.toFixed(1);
-            if (isAutoMute) {
-                onGlobalMute(false);
-            }
-        }
-        setVolumeValue(currentPercent);
-        onGlobalVolume(currentPercent);
-    };
-
-    const handleMute = () => {
-        if (isAutoMute) {
-            // setVolumeValue(prevVolumeValue);
-            setVolumeValue(prevSyncVolume);
-            onGlobalVolume(prevSyncVolume);
-        } else {
-            // setPreVVolumeValue(syncVolume);
-            onGlobalPrevValume(syncVolume);
-            setVolumeValue(0);
-            onGlobalVolume(0);
-        }
-        // setIsMute(!isMute);
-        onGlobalMute(!isAutoMute);
-    };
-
     // transform to single view mode
 
     const onSingleVideo = (e) => {
-        e.stopPropagation();
-        console.log(data.id);
         props.setCurrentVideo(index);
     };
 
@@ -270,19 +198,7 @@ function ContentVideo({ index, data, autoPlay, isDefaultOutOfScreen, loadMoreVid
 
                 {(isEnter || isEnterTippy) && (
                     <div onClick={(e) => e.preventDefault()}>
-                        <Tippy
-                            interactive
-                            offset={[4, 12]}
-                            delay={[0, 100]}
-                            placement="right-start"
-                            render={renderVolumeController}
-                            hideOnClick={false}
-                        >
-                            <div className={cx('volume-controller')} onClick={handleMute}>
-                                {!isAutoMute && <Volume className={cx('volume-on')}></Volume>}
-                                {isAutoMute && <XmarkVolume className={cx('volume-off')}></XmarkVolume>}
-                            </div>
-                        </Tippy>
+                        <Volume></Volume>
                     </div>
                 )}
                 {(isEnter || isEnterTippy) && (

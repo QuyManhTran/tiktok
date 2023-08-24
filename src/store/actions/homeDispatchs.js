@@ -6,7 +6,7 @@ const homeDispatchs = (dispatch) => {
         onGlobalVolume: (payload) => {
             dispatch({ type: 'set_volume', payload });
         },
-        onGlobalPrevValume: (payload) => {
+        onGlobalPrevVolume: (payload) => {
             dispatch({ type: 'set_prev_volume', payload });
         },
         setData: (payload) => {

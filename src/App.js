@@ -8,6 +8,7 @@ function App() {
             <div className="App">
                 <Routes>
                     {publicRoutes.map((route, index) => {
+                        const typeOfPage = route.page;
                         const Page = route.component;
                         let Layout = DefaultLayout;
                         if (route.layout) {
@@ -21,7 +22,7 @@ function App() {
                                 path={route.path}
                                 element={
                                     <Layout>
-                                        <Page />
+                                        <Page page={typeOfPage} />
                                     </Layout>
                                 }
                             />

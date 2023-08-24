@@ -9,6 +9,15 @@ const homeDispatchs = (dispatch) => {
         onGlobalPrevValume: (payload) => {
             dispatch({ type: 'set_prev_volume', payload });
         },
+        setData: (payload) => {
+            dispatch({ type: 'set_home_data', payload });
+        },
+        setPage: (payload) => {
+            dispatch({ type: 'set_page', payload });
+        },
+        setCurrentVideo: (payload) => {
+            dispatch({ type: 'set_current_video', payload });
+        },
     };
 };
 

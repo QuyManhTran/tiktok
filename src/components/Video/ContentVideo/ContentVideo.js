@@ -9,6 +9,7 @@ import { faEllipsisH, faPause, faPlay } from '@fortawesome/free-solid-svg-icons'
 import { BrokenHeartIcon, ReportIcon, Volume, XmarkVolume } from '../../Icon';
 import { useEffect, useRef, useState } from 'react';
 import Button from '../../Button';
+import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 function ContentVideo({ index, data, autoPlay, isDefaultOutOfScreen, loadMoreVideo, ...props }) {
@@ -134,7 +135,8 @@ function ContentVideo({ index, data, autoPlay, isDefaultOutOfScreen, loadMoreVid
         );
     };
 
-    const handlePlay = () => {
+    const handlePlay = (e) => {
+        e.preventDefault();
         if (playController.current.paused) {
             playController.current.play();
             setIsPlaying(true);
@@ -209,8 +211,16 @@ function ContentVideo({ index, data, autoPlay, isDefaultOutOfScreen, loadMoreVid
         onGlobalMute(!isAutoMute);
     };
 
+    // transform to single view mode
+
+    const onSingleVideo = (e) => {
+        e.stopPropagation();
+        console.log(data.id);
+        props.setCurrentVideo(index);
+    };
+
     return (
-        <div className={cx('wrapper')}>
+        <Link className={cx('wrapper')} to={`/@_${data.user.nickname}/video/${data.id}`} onClick={onSingleVideo}>
             <div
                 className={cx('video-wrapper')}
                 onMouseEnter={() => {
@@ -237,7 +247,7 @@ function ContentVideo({ index, data, autoPlay, isDefaultOutOfScreen, loadMoreVid
                     </div>
                 )}
                 {(isEnter || isEnterTippy) && (
-                    <div>
+                    <div onClick={(e) => e.preventDefault()}>
                         <Tippy
                             interactive
                             offset={[20, 30]}
@@ -259,7 +269,7 @@ function ContentVideo({ index, data, autoPlay, isDefaultOutOfScreen, loadMoreVid
                 )}
 
                 {(isEnter || isEnterTippy) && (
-                    <div>
+                    <div onClick={(e) => e.preventDefault()}>
                         <Tippy
                             interactive
                             offset={[4, 12]}
@@ -280,6 +290,7 @@ function ContentVideo({ index, data, autoPlay, isDefaultOutOfScreen, loadMoreVid
                         className={cx('seek-controller')}
                         onMouseEnter={() => setEnterProGress(true)}
                         onMouseLeave={() => setEnterProGress(false)}
+                        onClick={(e) => e.preventDefault()}
                     >
                         <div className={cx('control-seek-bar')} onMouseUp={handleMouseUp} onMouseDown={handleMouseDown}>
                             <div className="wrapper-seek-bar">
@@ -297,7 +308,7 @@ function ContentVideo({ index, data, autoPlay, isDefaultOutOfScreen, loadMoreVid
                     </div>
                 )}
             </div>
-        </div>
+        </Link>
     );
 }
 const mapStateToProps = (state) => {

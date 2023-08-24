@@ -7,6 +7,11 @@ const current = {
     isDefaultOutOfScreen: false,
     prevSyncVolume: dataLocalStorage.syncVolume === 0 ? 1 : dataLocalStorage.syncVolume,
     syncVolume: 0,
+    homeData: {
+        data: [],
+        page: 1,
+        current: null,
+    },
 };
 const defaultInit = {
     isLogin: false,
@@ -15,6 +20,11 @@ const defaultInit = {
     syncVolume: 0,
     prevSyncVolume: 1,
     isDefaultOutOfScreen: false,
+    homeData: {
+        data: [],
+        page: 1,
+        current: null,
+    },
 };
 const initState = dataLocalStorage ? current : defaultInit;
 
@@ -46,6 +56,15 @@ const rootReducer = (state = initState, action) => {
         case 'set_prev_volume':
             state = { ...state, prevSyncVolume: action.payload };
             localStorage.setItem(TIKTOK_LOCAL_STORAGE, JSON.stringify(state));
+            break;
+        case 'set_home_data':
+            state = { ...state, homeData: { ...state.homeData, data: action.payload } };
+            break;
+        case 'set_page':
+            state = { ...state, homeData: { ...state.homeData, page: action.payload } };
+            break;
+        case 'set_current_video':
+            state = { ...state, homeData: { ...state.homeData, current: action.payload } };
             break;
         default:
             return state;

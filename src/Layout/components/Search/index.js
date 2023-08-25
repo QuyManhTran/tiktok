@@ -70,7 +70,7 @@ function Search({ big }) {
                                 Accounts
                             </h4>
                             {searchResults.map((user) => (
-                                <AccountItem key={user.id} data={user} big></AccountItem>
+                                <AccountItem key={user.id} data={user} big={big}></AccountItem>
                             ))}
                         </PopperWrapper>
                     </div>

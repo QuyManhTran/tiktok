@@ -6,7 +6,7 @@ import Image from '../Image';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 const cx = classNames.bind(styles);
-function AccountItem({ data: user, big }) {
+function AccountItem({ data: user, big = false }) {
     return (
         <Link
             to={`/@${user.nickname}`}

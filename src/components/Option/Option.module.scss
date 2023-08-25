@@ -1,0 +1,79 @@
+//Option
+.option-controller {
+    position: absolute;
+    top: 0px;
+    right: 12px;
+    padding: 10px;
+    width: 40px;
+    height: 40px;
+    font-size: 2.4rem;
+    transition: opacity 0.3s;
+    color: var(--white-color);
+    cursor: pointer;
+}
+
+.option-big {
+    top: 20px;
+    right: 20px;
+    background: rgba(84, 84, 84, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: var(--white-color);
+    &:hover {
+        opacity: 0.7;
+    }
+}
+
+// tippy
+.wrapper-option {
+    display: block;
+    overflow: hidden;
+}
+
+.video-view {
+    padding: 2px 0px 8px 0px;
+    display: flex;
+    flex-direction: column;
+    .report {
+        margin-left: 0;
+    }
+}
+
+.video-view-big {
+    background-color: black;
+    color: var(--white-color);
+}
+
+.wrapper-big {
+    background-color: black;
+    padding-top: 6px;
+}
+.not-interested {
+    justify-content: flex-start;
+    min-width: 200px;
+}
+.report {
+    justify-content: flex-start;
+    min-width: 200px;
+}
+
+@mixin preview-btn($color: rgb(22, 24, 35), $backgroundHover: rgba(22, 24, 35, 0.03)) {
+    font-size: 1.4rem;
+    color: $color;
+    font-weight: 600;
+    &:hover {
+        background: $backgroundHover;
+    }
+}
+
+.not-interested,
+.report {
+    @include preview-btn();
+}
+
+.option-btn-big {
+    background-color: black;
+    @include preview-btn($color: var(--white-color), $backgroundHover: rgba(255, 255, 255, 0.08));
+}

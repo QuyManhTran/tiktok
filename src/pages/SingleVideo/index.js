@@ -9,6 +9,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useRef, useState } from 'react';
 import Volume from '../../components/Volume';
+import Option from '../../components/Option';
+import Search from '../../Layout/components/Search';
 
 const cx = classNames.bind(styles);
 function SingleVideo({ page, ...props }) {
@@ -95,6 +97,8 @@ function SingleVideo({ page, ...props }) {
             </Link>
             {!isPlaying && <FontAwesomeIcon icon={faPlay} className={cx('play-icon')} />}
             <Volume big></Volume>
+            <Option big></Option>
+            <Search big></Search>
         </div>
     );
 }

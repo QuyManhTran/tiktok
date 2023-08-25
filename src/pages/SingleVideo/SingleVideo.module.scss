@@ -117,4 +117,23 @@
     cursor: pointer;
 }
 
-// volume
+// search
+.wrapper-search {
+    width: calc(100% - 184px);
+    max-width: calc(56.25vh - 32px);
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    border-radius: 92px;
+    background-color: transparent;
+    border: 0.5px solid var(--white-color);
+}
+
+.wrapper-input {
+    background-color: transparent;
+    color: var(--white-color);
+}

@@ -1,0 +1,79 @@
+import classNames from 'classnames/bind';
+import styles from './Option.module.scss';
+import Tippy from '@tippyjs/react/headless';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEllipsisH } from '@fortawesome/free-solid-svg-icons';
+import { Wrapper as OptionWrapper } from '../Popper';
+import Button from '../Button';
+import { BrokenHeartIcon, ReportIcon } from '../Icon';
+const cx = classNames.bind(styles);
+function Option({ big = false, ...props }) {
+    const renderPreview = (attrs) => {
+        return (
+            <div tabIndex="-1" {...attrs}>
+                <OptionWrapper
+                    className={cx('wrapper-option', {
+                        // eslint-disable-next-line no-useless-computed-key
+                        ['wrapper-big']: big,
+                    })}
+                >
+                    <div
+                        className={cx('video-view', {
+                            // eslint-disable-next-line no-useless-computed-key
+                            ['video-view-big']: big,
+                        })}
+                        onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                        }}
+                    >
+                        <Button
+                            className={cx('not-interested', {
+                                // eslint-disable-next-line no-useless-computed-key
+                                ['option-btn-big']: big,
+                            })}
+                            leftIcon={<BrokenHeartIcon></BrokenHeartIcon>}
+                        >
+                            Not interested
+                        </Button>
+
+                        <Button
+                            className={cx('report', {
+                                // eslint-disable-next-line no-useless-computed-key
+                                ['option-btn-big']: big,
+                            })}
+                            leftIcon={<ReportIcon></ReportIcon>}
+                        >
+                            Report
+                        </Button>
+                    </div>
+                </OptionWrapper>
+            </div>
+        );
+    };
+    return (
+        <Tippy
+            interactive
+            offset={big ? [0, 12] : [20, 30]}
+            delay={[0, 200]}
+            placement={big ? 'bottom-start' : 'right-start'}
+            render={renderPreview}
+            onMount={props.onMountTippy}
+            onHidden={props.onHiddenTippy}
+        >
+            <div
+                className={cx('option-controller', {
+                    // eslint-disable-next-line no-useless-computed-key
+                    ['option-big']: big,
+                })}
+                onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }}
+            >
+                <FontAwesomeIcon icon={faEllipsisH} />
+            </div>
+        </Tippy>
+    );
+}
+export default Option;

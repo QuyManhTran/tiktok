@@ -10,7 +10,7 @@ import { useDebounce } from '../../../hooks';
 import * as searchService from '../../../service/searchService';
 const cx = classNames.bind(styles);
 
-function Search() {
+function Search({ big }) {
     const [searchText, setSearchText] = useState('');
     const [resultDisplay, setResultDisplay] = useState(false);
     const [searchResults, setSearchResults] = useState([]);
@@ -65,23 +65,31 @@ function Search() {
                 onClickOutside={handleOutSideResults}
                 render={(attrs) => (
                     <div className={cx('search-result')} tabIndex="-1" {...attrs}>
-                        <PopperWrapper>
-                            <h4 className={cx('search-title')}>Accounts</h4>
+                        <PopperWrapper className={big && cx('wrapper-tippy')}>
+                            <h4 className={cx('search-title')} style={big && { color: 'var(--white-color)' }}>
+                                Accounts
+                            </h4>
                             {searchResults.map((user) => (
-                                <AccountItem key={user.id} data={user}></AccountItem>
+                                <AccountItem key={user.id} data={user} big></AccountItem>
                             ))}
                         </PopperWrapper>
                     </div>
                 )}
             >
-                <div className={cx('search')}>
+                <div
+                    className={cx('search', {
+                        ['wrapper-search']: big,
+                    })}
+                    onClick={(e) => e.stopPropagation()}
+                >
                     <input
                         ref={inputRef}
                         placeholder="Search accounts and videos"
                         spellCheck={false}
                         value={searchText}
                         onChange={handleChange}
-                        onFocus={() => setResultDisplay(true)}
+                        onFocus={(e) => setResultDisplay(true)}
+                        className={big && cx('wrapper-input')}
                     ></input>
                     {!!searchText && !loading && (
                         <button className={cx('clear')} onClick={handleClear}>
@@ -90,7 +98,12 @@ function Search() {
                     )}
 
                     {loading && <FontAwesomeIcon className={cx('loading')} icon={faSpinner} />}
-                    <button className={cx('search-btn')} onMouseDown={handleMouseDown}>
+                    <button
+                        className={cx('search-btn', {
+                            ['search-btn-big']: big,
+                        })}
+                        onMouseDown={handleMouseDown}
+                    >
                         <FontAwesomeIcon icon={faMagnifyingGlass} />
                     </button>
                 </div>

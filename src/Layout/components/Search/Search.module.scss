@@ -35,6 +35,11 @@
         background-color: rgb(230, 230, 230);
     }
 
+    input:not(:placeholder-shown) ~ .search-btn-big {
+        color: var(--white-color);
+        background-color: transparent;
+    }
+
     &::after {
         content: '';
         position: absolute;
@@ -47,6 +52,45 @@
 
     &:focus-within {
         border-color: #c5c6c9;
+    }
+}
+
+.wrapper-search {
+    width: calc(362px);
+    max-width: 100%;
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    background-color: transparent;
+    border: 0.5px solid rgba(255, 255, 255, 0.75);
+
+    &::after {
+        background-color: rgba(255, 255, 255, 0.6);
+    }
+
+    .wrapper-input {
+        background-color: transparent;
+        color: var(--white-color);
+    }
+
+    .search-btn-big {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: rgba(255, 255, 255, 0.75);
+        background-color: transparent;
+        &:hover {
+            background-color: rgba(22, 24, 35, 0.1);
+        }
+    }
+
+    .clear,
+    .loading {
+        background-color: transparent;
+        color: rgba(255, 255, 255, 0.5);
     }
 }
 
@@ -85,4 +129,8 @@
 
 .loading {
     animation: spinner 4s linear infinite;
+}
+// tippy search
+.wrapper-tippy {
+    background: black;
 }

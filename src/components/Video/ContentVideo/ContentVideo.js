@@ -1,16 +1,13 @@
 import classNames from 'classnames/bind';
 import styles from './ContentVideo.mudule.scss';
-import Tippy from '@tippyjs/react/headless';
 import { connect } from 'react-redux';
 import homeDispatchs from '../../../store/actions/homeDispatchs';
-import { Wrapper as OptionWrapper } from '../../Popper';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEllipsisH, faPause, faPlay } from '@fortawesome/free-solid-svg-icons';
-import { BrokenHeartIcon, ReportIcon, VolumeIcon, XmarkVolume } from '../../Icon';
+import { faPause, faPlay } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useRef, useState } from 'react';
-import Button from '../../Button';
 import { Link } from 'react-router-dom';
-import Volume from '../../Volume/Volume';
+import Volume from '../../Volume';
+import Option from '../../Option';
 
 const cx = classNames.bind(styles);
 function ContentVideo({ index, data, autoPlay, isDefaultOutOfScreen, loadMoreVideo, ...props }) {
@@ -82,24 +79,6 @@ function ContentVideo({ index, data, autoPlay, isDefaultOutOfScreen, loadMoreVid
         return () => window.removeEventListener('scroll', listenWindow);
     });
 
-    const renderPreview = (attrs) => {
-        return (
-            <div tabIndex="-1" {...attrs}>
-                <OptionWrapper>
-                    <div className={cx('video-view')}>
-                        <Button className={cx('not-interested')} leftIcon={<BrokenHeartIcon></BrokenHeartIcon>}>
-                            Not interested
-                        </Button>
-
-                        <Button className={cx('report')} leftIcon={<ReportIcon></ReportIcon>}>
-                            Report
-                        </Button>
-                    </div>
-                </OptionWrapper>
-            </div>
-        );
-    };
-
     const handlePlay = (e) => {
         e.preventDefault();
         if (playController.current.paused) {
@@ -141,6 +120,15 @@ function ContentVideo({ index, data, autoPlay, isDefaultOutOfScreen, loadMoreVid
         return `0${minute}:${second < 10 ? `0${second}` : second}`;
     };
 
+    // option
+    const onMountTippy = () => {
+        setIsEnterTippy(true);
+    };
+
+    const onHiddenTippy = () => {
+        setIsEnterTippy(false);
+    };
+
     // transform to single view mode
 
     const onSingleVideo = (e) => {
@@ -176,23 +164,7 @@ function ContentVideo({ index, data, autoPlay, isDefaultOutOfScreen, loadMoreVid
                 )}
                 {(isEnter || isEnterTippy) && (
                     <div onClick={(e) => e.preventDefault()}>
-                        <Tippy
-                            interactive
-                            offset={[20, 30]}
-                            delay={[0, 100]}
-                            placement="right-start"
-                            render={renderPreview}
-                            onMount={() => {
-                                setIsEnterTippy(true);
-                            }}
-                            onHidden={() => {
-                                setIsEnterTippy(false);
-                            }}
-                        >
-                            <div className={cx('option-controller')}>
-                                <FontAwesomeIcon icon={faEllipsisH} />
-                            </div>
-                        </Tippy>
+                        <Option onMountTippy={onMountTippy} onHiddenTippy={onHiddenTippy}></Option>
                     </div>
                 )}
 

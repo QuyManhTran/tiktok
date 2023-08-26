@@ -23,7 +23,6 @@ import TippyHeadless from '@tippyjs/react/headless';
 import 'tippy.js/dist/tippy.css';
 import ShareLink from '../../../../components/ShareLink';
 import { Wrapper } from '../../../../components/Popper';
-
 const cx = classNames.bind(styles);
 const link = 'https://soundcloud.com/user-624009075/tra-i-tim-em-va-do-ng-ma-u-no';
 function Header({ ...props }) {

@@ -12,7 +12,7 @@
     display: flex;
     flex-direction: column;
     padding: 24px 32px 0 32px;
-    max-height: 739px;
+    max-height: 659px;
 }
 
 .navbar-container {
@@ -53,4 +53,112 @@
     border-bottom: 2px solid black;
     color: rgb(22, 24, 35);
     font-weight: 700;
+}
+
+// user comment
+.user-comment {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    border-top: 1px solid rgba(22, 24, 35, 0.2);
+    overflow: hidden;
+}
+.inner-comment {
+    margin-left: 32px;
+    flex: 1;
+    width: 100%;
+    position: relative;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    background-color: rgba(22, 24, 35, 0.06);
+    margin: 19px 0;
+    margin-left: 32px;
+}
+.post-btn {
+    color: rgba(22, 24, 35, 0.34);
+    font-weight: 600;
+    letter-spacing: 0.093px;
+    pointer-events: none;
+    font-size: 1.4rem;
+    margin-right: 32px;
+    width: 48px;
+    text-align: right;
+    user-select: none;
+}
+.comment-items {
+    display: flex;
+    align-items: center;
+}
+
+.wrapper-input {
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+.comment-input {
+    flex: 1;
+    display: block;
+    width: 100%;
+    padding: 12px 0;
+    padding-left: 12px;
+    background-color: transparent;
+    color: rgba(22, 24, 35, 1);
+    letter-spacing: 0.093px;
+    font-size: 1.4rem;
+    caret-color: var(--primary);
+}
+.mention-btn {
+    display: block;
+    margin-right: 3px;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    padding: 5px;
+    cursor: pointer;
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.12);
+    }
+}
+
+.mention-btn__active {
+    background-color: rgba(0, 0, 0, 0.12);
+}
+
+.active {
+    pointer-events: all;
+    cursor: pointer;
+    color: var(--primary);
+}
+
+.inner-active {
+    border-color: rgba(22, 24, 35, 0.2);
+}
+// emoji
+.wrapper-poper {
+    z-index: 999;
+    position: fixed;
+    bottom: 70px;
+    right: 80px;
+    width: inherit;
+}
+
+.wrapper-emojis {
+    width: 260px;
+}
+
+.emoji-icon {
+    display: inline-block;
+    font-size: 24px;
+    width: 40px;
+    height: 40px;
+    line-height: 46px;
+    margin: 5px 6px;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 8px;
+
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.12);
+    }
 }

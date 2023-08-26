@@ -19,7 +19,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
 import Tippy from '@tippyjs/react';
+import TippyHeadless from '@tippyjs/react/headless';
 import 'tippy.js/dist/tippy.css';
+import ShareLink from '../../../../components/ShareLink';
+import { Wrapper } from '../../../../components/Popper';
 
 const cx = classNames.bind(styles);
 const link = 'https://soundcloud.com/user-624009075/tra-i-tim-em-va-do-ng-ma-u-no';
@@ -120,7 +123,19 @@ function Header({ ...props }) {
                             <Twitter className={cx('share-icon')}></Twitter>
                         </span>
                     </Tippy>
-                    <Tippy content="Share">
+                    <TippyHeadless
+                        render={(attrs) => {
+                            return (
+                                <div tabIndex="-1" {...attrs}>
+                                    <Wrapper>
+                                        <ShareLink linkedln telegram line email></ShareLink>
+                                    </Wrapper>
+                                </div>
+                            );
+                        }}
+                        interactive
+                        delay={[0, 400]}
+                    >
                         <span>
                             <ShareIcon
                                 className={cx('share-icon', {
@@ -128,7 +143,7 @@ function Header({ ...props }) {
                                 })}
                             ></ShareIcon>
                         </span>
-                    </Tippy>
+                    </TippyHeadless>
                 </div>
             </div>
             <div className={cx('copy-link')}>

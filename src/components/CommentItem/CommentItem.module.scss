@@ -1,0 +1,98 @@
+@use '../../Layout/components/SidebarSingleView/Header/Header.module.scss';
+.user-link {
+    line-height: 1px;
+    align-self: flex-start;
+}
+
+.avatar-comment {
+    font-size: 1.4rem;
+    font-weight: 600;
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.comment-container {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.wrapper-comment {
+    margin-bottom: 8px;
+}
+.comment {
+    font-size: 1.6rem;
+    line-height: 21px;
+}
+
+.comment-infor {
+    color: rgba(22, 24, 35, 0.5);
+    font-size: 1.4rem;
+    line-height: 21px;
+    letter-spacing: 0.093px;
+    padding-top: 4px;
+    user-select: none;
+}
+
+.reply {
+    padding-left: 46px;
+    cursor: pointer;
+}
+
+.action-wrapper {
+    display: flex;
+    cursor: pointer;
+}
+
+.react-heart {
+    padding-top: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+}
+
+@mixin action-comment() {
+    color: rgba(22, 24, 35, 0.5);
+    width: 20px;
+    height: 20px;
+    font-weight: 100;
+}
+.heart-icon {
+    @include action-comment();
+}
+
+.heart-icon_active {
+    @include action-comment();
+    color: var(--primary);
+    transition: all 1s linear 0s;
+}
+.comment-amount {
+    @include action-comment();
+    text-align: center;
+}
+
+// reply
+.reply-view {
+    display: flex;
+    align-items: center;
+    color: rgba(22, 24, 35, 0.5);
+    font-weight: 600;
+    font-size: 1.4rem;
+    line-height: 18px;
+    letter-spacing: 0.093px;
+    cursor: pointer;
+    margin-left: 53px;
+    &:hover {
+        text-decoration: underline;
+    }
+}
+.arrow-down {
+    margin-left: 6px;
+    width: 14px;
+    height: 14px;
+    vertical-align: middle;
+    transform: none;
+    padding-top: 2px;
+}

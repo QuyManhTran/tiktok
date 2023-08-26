@@ -18,6 +18,8 @@ import ActionItem from '../../../../components/ActionItem/ActionItem';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
+import Tippy from '@tippyjs/react';
+import 'tippy.js/dist/tippy.css';
 
 const cx = classNames.bind(styles);
 const link = 'https://soundcloud.com/user-624009075/tra-i-tim-em-va-do-ng-ma-u-no';
@@ -93,16 +95,40 @@ function Header({ ...props }) {
                     </div>
                 </div>
                 <div className={cx('inner-shares')}>
-                    <EmbedIcon className={cx('share-icon')}></EmbedIcon>
-                    <SendIcon className={cx('share-icon')}></SendIcon>
-                    <FacebookIcon className={cx('share-icon')}></FacebookIcon>
-                    <WhatsAppIcon className={cx('share-icon')}></WhatsAppIcon>
-                    <Twitter className={cx('share-icon')}></Twitter>
-                    <ShareIcon
-                        className={cx('share-icon', {
-                            sendicon: true,
-                        })}
-                    ></ShareIcon>
+                    <Tippy content="Embed">
+                        <span>
+                            <EmbedIcon className={cx('share-icon')}></EmbedIcon>
+                        </span>
+                    </Tippy>
+                    <Tippy content="Send to friends">
+                        <span>
+                            <SendIcon className={cx('share-icon')}></SendIcon>
+                        </span>
+                    </Tippy>
+                    <Tippy content="Share to Facebook">
+                        <span>
+                            <FacebookIcon className={cx('share-icon')}></FacebookIcon>
+                        </span>
+                    </Tippy>
+                    <Tippy content="Share to WhatsApp">
+                        <span>
+                            <WhatsAppIcon className={cx('share-icon')}></WhatsAppIcon>
+                        </span>
+                    </Tippy>
+                    <Tippy content="Share to Twitter">
+                        <span>
+                            <Twitter className={cx('share-icon')}></Twitter>
+                        </span>
+                    </Tippy>
+                    <Tippy content="Share">
+                        <span>
+                            <ShareIcon
+                                className={cx('share-icon', {
+                                    sendicon: true,
+                                })}
+                            ></ShareIcon>
+                        </span>
+                    </Tippy>
                 </div>
             </div>
             <div className={cx('copy-link')}>

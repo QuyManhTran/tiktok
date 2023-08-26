@@ -26,6 +26,19 @@
     }
 }
 
+.option-comment {
+    top: -4px;
+    right: -1.5px;
+    position: absolute;
+    color: black;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+}
+
 // tippy
 .wrapper-option {
     display: block;

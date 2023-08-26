@@ -134,13 +134,18 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    span {
+        cursor: pointer;
+        line-height: 0;
+        + span {
+            margin-left: 8px;
+        }
+    }
 }
 .share-icon {
     width: 24px;
     height: 24px;
-    + .share-icon {
-        margin-left: 8px;
-    }
 }
 .sendicon {
     width: 16px;

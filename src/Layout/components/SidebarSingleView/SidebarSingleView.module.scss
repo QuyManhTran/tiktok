@@ -2,24 +2,55 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    max-width: 536px;
+    max-width: 544px;
 }
 
 .container-comment {
     position: relative;
     width: 100%;
-    border-bottom: 1px solid rgba(22, 24, 35, 0.2);
-    overflow: hidden;
-    flex-grow: 1;
+    overflow: hidden auto;
     display: flex;
     flex-direction: column;
+    padding: 24px 32px 0 32px;
+    max-height: 739px;
 }
 
-.inner-comment {
-    position: relative;
-    width: 100%;
-    overflow: hidden auto;
-    -webkit-box-flex: 1;
-    flex-grow: 1;
-    padding: 24px 32px;
+.navbar-container {
+    padding-top: 12px;
+    position: sticky;
+    top: -28px;
+    background: rgb(255, 255, 255);
+    z-index: 1;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgba(22, 24, 35, 0.2);
+    margin: 0 -32px 24px -32px;
+}
+
+@mixin navbar-item() {
+    text-align: center;
+    width: 50%;
+    height: 100%;
+    color: rgba(22, 24, 35, 0.6);
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.093px;
+    overflow: auto;
+    line-height: 24px;
+    cursor: pointer;
+    padding: 8px 0;
+}
+
+.creator-video {
+    @include navbar-item();
+}
+.Comments {
+    @include navbar-item();
+}
+
+.nav-bar_active {
+    border-bottom: 2px solid black;
+    color: rgb(22, 24, 35);
+    font-weight: 700;
 }

@@ -12,9 +12,24 @@
     }
 }
 
+.avatar-reply {
+    width: 24px;
+    height: 24px;
+}
+
 .comment-container {
     margin-bottom: 20px;
     position: relative;
+    transition: all 0.8s ease 0s;
+}
+
+.comment-container__reply {
+    margin-bottom: 0;
+    position: relative;
+}
+
+.reply-comment {
+    margin-left: 46px;
 }
 
 .wrapper-comment {
@@ -74,7 +89,7 @@
 }
 
 // reply
-.reply-view {
+@mixin reply() {
     display: flex;
     align-items: center;
     color: rgba(22, 24, 35, 0.5);
@@ -88,11 +103,28 @@
         text-decoration: underline;
     }
 }
-.arrow-down {
+.reply-view {
+    @include reply();
+}
+
+.reply-hide {
+    @include reply();
+    margin-left: 0;
+    justify-content: end;
+}
+
+@mixin arrow() {
     margin-left: 6px;
     width: 14px;
     height: 14px;
     vertical-align: middle;
     transform: none;
     padding-top: 2px;
+}
+.arrow-down {
+    @include arrow();
+}
+.arrow-up {
+    @include arrow();
+    transform: rotate(180deg);
 }

@@ -830,3 +830,20 @@ export function Smile({ className, width = '22px', height = '22px' }) {
         </svg>
     );
 }
+
+export function TopUpIcon({ className, width = '22px', height = '22px' }) {
+    return (
+        <svg
+            fill="currentColor"
+            size="12"
+            color="#161823"
+            viewBox="0 0 48 48"
+            xmlns="http://www.w3.org/2000/svg"
+            width={width}
+            height={height}
+            className={className}
+        >
+            <path d="m25.77 9.23 9.3 9.3a1 1 0 0 1 0 1.4l-2.13 2.13a1 1 0 0 1-1.41 0L24 14.54l-7.53 7.52a1 1 0 0 1-1.4 0l-2.13-2.12a1 1 0 0 1 0-1.41l9.3-9.3a2.5 2.5 0 0 1 3.53 0ZM25.77 24.23l9.3 9.3a1 1 0 0 1 0 1.4l-2.13 2.13a1 1 0 0 1-1.41 0L24 29.54l-7.53 7.52a1 1 0 0 1-1.4 0l-2.13-2.12a1 1 0 0 1 0-1.41l9.3-9.3a2.5 2.5 0 0 1 3.53 0Z"></path>
+        </svg>
+    );
+}

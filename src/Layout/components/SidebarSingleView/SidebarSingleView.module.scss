@@ -97,6 +97,7 @@
 }
 
 .comment-input {
+    font-family: var(--font-family);
     flex: 1;
     display: block;
     width: 100%;
@@ -144,7 +145,9 @@
 }
 
 .wrapper-emojis {
-    width: 260px;
+    width: 280px;
+    max-height: 250px;
+    overflow-y: overlay;
 }
 
 .emoji-icon {
@@ -161,4 +164,32 @@
     &:hover {
         background-color: rgba(0, 0, 0, 0.12);
     }
+}
+
+// back to up
+.comeback-btn {
+    position: fixed;
+    right: 24px;
+    bottom: 100px;
+    background-color: var(--white-color);
+    font-weight: 600;
+    color: rgb(22, 24, 35);
+    line-height: 24px;
+    text-align: center;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 8px;
+    border-radius: 52px;
+    cursor: pointer;
+    height: 40px;
+    padding: 0 8px;
+    transition: all 0.3s linear 0s;
+}
+
+.back-icon {
+    height: 14px;
+    width: 14px;
+    margin-left: 4px;
 }

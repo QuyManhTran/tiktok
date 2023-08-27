@@ -4,8 +4,8 @@ import styles from './SidebarSingleView.module.scss';
 import Header from './Header';
 import CommentItem from '../../../components/CommentItem/CommentItem';
 import { allDay } from '../../../asset/data/formData';
-import { AtIcon, Smile } from '../../../components/Icon';
-import { useRef, useState } from 'react';
+import { AtIcon, Smile, TopUpIcon } from '../../../components/Icon';
+import { useEffect, useRef, useState } from 'react';
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
 import { emojis } from '../../../asset/data/emojiData';
@@ -17,7 +17,24 @@ function SidebarSingleView() {
     const [isFocusInput, setIsFocusInput] = useState(false);
     const [isClickEmoji, setIsClickEmoji] = useState(false);
     const [isEnterEmojis, setIsEnterEmojis] = useState(false);
+    const [isScroll, setIsScroll] = useState(false);
     const inputRef = useRef();
+    useEffect(() => {
+        const containerComment = document.getElementById('container-comment');
+        const listenWindow = () => {
+            if (containerComment.scrollTop > 0) {
+                if (!isScroll) {
+                    setIsScroll(true);
+                }
+            } else {
+                setIsScroll(false);
+            }
+        };
+        containerComment.addEventListener('scroll', listenWindow);
+        //clean up
+        return () => containerComment.removeEventListener('scroll', listenWindow);
+    }, [isScroll]);
+
     const onComment = (e) => {
         if (e.target.value.trim()) {
             if (!isComment) {
@@ -34,12 +51,13 @@ function SidebarSingleView() {
 
     const onTag = () => {
         inputRef.current.value = inputRef.current.value + '@';
+        inputRef.current.focus();
         setIsComment(true);
     };
 
     const onEmoji = () => {
-        setIsClickEmoji(true);
-        inputRef.current.focus();
+        setIsClickEmoji(!isClickEmoji);
+        setIsFocusInput(true);
     };
 
     const onSelectEmoji = (e) => {
@@ -47,12 +65,17 @@ function SidebarSingleView() {
         inputRef.current.focus();
         setIsComment(true);
         setIsClickEmoji(false);
+        setIsEnterEmojis(false);
+    };
+
+    const onComeBack = () => {
+        const containerComment = document.getElementById('container-comment');
+        containerComment.scrollTo({ top: 0, behavior: 'smooth' });
     };
     return (
         <div className={cx('wrapper')}>
-            <div className={cx('container-comment')}>
+            <div id="container-comment" className={cx('container-comment')}>
                 <Header></Header>
-
                 <div className={cx('navbar-container')}>
                     <div className={cx('creator-video')}>Creator videos</div>
                     <div
@@ -64,7 +87,9 @@ function SidebarSingleView() {
                     </div>
                 </div>
                 {allDay.map((element, index) => (
-                    <CommentItem key={index}></CommentItem>
+                    <CommentItem key={index}>
+                        <CommentItem reply></CommentItem>
+                    </CommentItem>
                 ))}
             </div>
             <div className={cx('user-comment')}>
@@ -81,10 +106,12 @@ function SidebarSingleView() {
                                 placeholder="Add comment"
                                 spellCheck={false}
                                 onChange={onComment}
-                                onFocus={() => setIsFocusInput(true)}
+                                onFocus={() => {
+                                    setIsFocusInput(true);
+                                    if (isClickEmoji) setIsClickEmoji(false);
+                                }}
                                 onBlur={() => {
                                     if (!isEnterEmojis) {
-                                        console.log('hello');
                                         setIsFocusInput(false);
                                         setIsClickEmoji(false);
                                     }
@@ -134,6 +161,12 @@ function SidebarSingleView() {
                     Post
                 </span>
             </div>
+            {isScroll && (
+                <button className={cx('comeback-btn')} onClick={onComeBack}>
+                    Back to top
+                    <TopUpIcon className={cx('back-icon')}></TopUpIcon>
+                </button>
+            )}
         </div>
     );
 }

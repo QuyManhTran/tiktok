@@ -27,6 +27,18 @@ const defaultInit = {
     },
 };
 const initState = dataLocalStorage ? current : defaultInit;
+const onFollow = (homeData, payload) => {
+    const data = homeData.data;
+    const current = homeData.current;
+    const newData = data.map((item, index) => {
+        if (index !== current) {
+            return item;
+        } else {
+            return payload;
+        }
+    });
+    return { ...homeData, data: newData };
+};
 
 const rootReducer = (state = initState, action) => {
     switch (action.type) {
@@ -65,6 +77,9 @@ const rootReducer = (state = initState, action) => {
             break;
         case 'set_current_video':
             state = { ...state, homeData: { ...state.homeData, current: action.payload } };
+            break;
+        case 'set-follow':
+            state = { ...state, homeData: onFollow(state.homeData, action.payload) };
             break;
         default:
             return state;

@@ -8,6 +8,7 @@ const defaultDispatchs = (dispatch) => {
             dispatch({ type: 'open_modal' });
         },
         closeModal: () => dispatch({ type: 'close_modal' }),
+        onFollow: (payload) => dispatch({ type: 'set-follow', payload }),
     };
 };
 

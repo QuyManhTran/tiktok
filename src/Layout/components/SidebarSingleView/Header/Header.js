@@ -23,9 +23,18 @@ import TippyHeadless from '@tippyjs/react/headless';
 import 'tippy.js/dist/tippy.css';
 import ShareLink from '../../../../components/ShareLink';
 import { Wrapper } from '../../../../components/Popper';
+// import { useEffect, useState } from 'react';
+import defaultDispatchs from '../../../../store/actions/defaultDispatch';
 const cx = classNames.bind(styles);
 const link = 'https://soundcloud.com/user-624009075/tra-i-tim-em-va-do-ng-ma-u-no';
 function Header({ ...props }) {
+    const userData = props.data.userData;
+    const isFollowing = userData.user.is_followed;
+
+    const onFollow = () => {
+        userData.user.is_followed = !isFollowing;
+        props.onFollow(userData);
+    };
     const onCopyLink = (e) => {
         navigator.clipboard.writeText(link);
         e.target.innerText = 'Copied';
@@ -33,30 +42,36 @@ function Header({ ...props }) {
             e.target.innerText = 'Copy link';
         }, 1000);
     };
+
     return (
         <div className={cx('wrapper')}>
             <div className={cx('container-content')}>
                 <Link className={cx('wrapper-infor')}>
                     <Image
-                        alt="hoa hau y nhi"
-                        src="https://p16-sign-useast2a.tiktokcdn.com/tos-useast2a-avt-0068-euttp/a02858c054eb63ed88751bb8c8f6e0f1~c5_100x100.jpeg?x-expires=1693141200&x-signature=iqbOAmGbr4%2Fo2uYcfEzCnFs2Nok%3D"
+                        alt={userData.user.first_name + ' ' + userData.user.last_name}
+                        src={userData.user.avatar}
                         className={cx('avatar-user')}
                     ></Image>
                     <div className={cx('infor-user')}>
                         <span className={cx('username')}>
-                            englishteacherclaire
+                            {userData.user.nickname}
                             <FontAwesomeIcon className={cx('check-icon')} icon={faCircleCheck} />
                         </span>
-                        <span className={cx('name')}>Claire . 12/7</span>
+                        <span className={cx('name')}>
+                            {userData.user.first_name + ' ' + userData.user.last_name} . 12/7
+                        </span>
                     </div>
-                    <Button primary className={cx('btn-follow')}>
-                        Follow
+                    <Button
+                        primary={!isFollowing}
+                        outline={isFollowing}
+                        className={cx('btn-follow')}
+                        onClick={onFollow}
+                    >
+                        {!isFollowing ? 'Follow' : 'Following'}
                     </Button>
                 </Link>
                 <div className={cx('describe-post')}>
-                    <span className={cx('content')}>
-                        Did this ever happen to you? 😅🙄🥱 Your shirt is on backwards. Your jacket is inside out.
-                    </span>
+                    <span className={cx('content')}>{userData.description}</span>
                 </div>
                 <a
                     className={cx('trend')}
@@ -77,14 +92,14 @@ function Header({ ...props }) {
                             active={cx('red-active')}
                             isLogin={props.data.isLogin}
                         ></ActionItem>
-                        <span className={cx('analystics')}>7.5M</span>
+                        <span className={cx('analystics')}>{userData.user.likes_count}M</span>
                     </div>
                     <div className={cx('reaction-icon')} style={{ pointerEvents: 'none' }}>
                         <ActionItem
                             className={cx('icon')}
                             icon={<CommentIcon className={cx('icon-react')} />}
                         ></ActionItem>
-                        <span className={cx('analystics')}>15.4K</span>
+                        <span className={cx('analystics')}>128K</span>
                     </div>
                     <div className={cx('reaction-icon')}>
                         <ActionItem
@@ -93,7 +108,7 @@ function Header({ ...props }) {
                             active={cx('yellow-active')}
                             isLogin={props.data.isLogin}
                         ></ActionItem>
-                        <span className={cx('analystics')}>837.2K</span>
+                        <span className={cx('analystics')}>28K</span>
                     </div>
                 </div>
                 <div className={cx('inner-shares')}>
@@ -161,7 +176,9 @@ const mapStateToProps = (state) => {
     return {
         data: {
             isLogin: state.isLogin,
+            userData: state.homeData.data[state.homeData.current],
         },
     };
 };
-export default connect(mapStateToProps, null)(Header);
+const mapDispatchToProps = defaultDispatchs;
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

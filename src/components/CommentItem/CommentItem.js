@@ -10,9 +10,10 @@ import { faHeart } from '@fortawesome/free-regular-svg-icons';
 import { faHeart as faHeartActive } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 const cx = classNames.bind(styles);
-function CommentItem() {
+function CommentItem({ children, reply }) {
     const [isActive, setIsActive] = useState(false);
     const [isEnter, setIsEnter] = useState(false);
+    const [isReply, setIsReply] = useState(false);
     const onHeart = () => {
         setIsActive(!isActive);
     };
@@ -22,8 +23,17 @@ function CommentItem() {
     const onLeave = () => {
         setIsEnter(false);
     };
+    const onReply = () => {
+        setIsReply(!isReply);
+    };
     return (
-        <div className={cx('comment-container')} onMouseEnter={onEnter} onMouseLeave={onLeave}>
+        <div
+            className={cx('comment-container', {
+                ['comment-container__reply']: reply,
+            })}
+            onMouseEnter={onEnter}
+            onMouseLeave={onLeave}
+        >
             <div
                 className={cx('wrapper-infor', {
                     ['wrapper-comment']: true,
@@ -33,7 +43,9 @@ function CommentItem() {
                     <Image
                         alt="hoa hau y nhi"
                         src="https://p16-sign-useast2a.tiktokcdn.com/tos-useast2a-avt-0068-euttp/a02858c054eb63ed88751bb8c8f6e0f1~c5_100x100.jpeg?x-expires=1693141200&x-signature=iqbOAmGbr4%2Fo2uYcfEzCnFs2Nok%3D"
-                        className={cx('avatar-user')}
+                        className={cx('avatar-user', {
+                            ['avatar-reply']: reply,
+                        })}
                     ></Image>
                 </Link>
                 <div className={cx('infor-user')}>
@@ -60,10 +72,19 @@ function CommentItem() {
                     <span className={cx('comment-amount')}>{isActive ? '27' : '26'}</span>
                 </div>
             </div>
-            <div className={cx('reply-view')}>
-                View 1 replies
-                <FontAwesomeIcon icon={faAngleDown} className={cx('arrow-down')}></FontAwesomeIcon>
-            </div>
+            {!isReply && children && (
+                <div className={cx('reply-view')} onClick={onReply}>
+                    View 1 replies
+                    <FontAwesomeIcon icon={faAngleDown} className={cx('arrow-down')}></FontAwesomeIcon>
+                </div>
+            )}
+            {isReply && <div className={cx('reply-comment')}>{children}</div>}
+            {isReply && (
+                <div className={cx('reply-hide')} onClick={onReply}>
+                    Hide
+                    <FontAwesomeIcon icon={faAngleDown} className={cx('arrow-up')}></FontAwesomeIcon>
+                </div>
+            )}
         </div>
     );
 }

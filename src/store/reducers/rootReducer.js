@@ -1,18 +1,20 @@
 const TIKTOK_LOCAL_STORAGE = 'TikTok';
 const dataLocalStorage = JSON.parse(localStorage.getItem(TIKTOK_LOCAL_STORAGE));
-const current = {
-    ...dataLocalStorage,
-    isModal: false,
-    isAutoMute: true,
-    isDefaultOutOfScreen: false,
-    prevSyncVolume: dataLocalStorage.syncVolume === 0 ? 1 : dataLocalStorage.syncVolume,
-    syncVolume: 0,
-    homeData: {
-        data: [],
-        page: 1,
-        current: null,
-    },
-};
+const current = dataLocalStorage
+    ? {
+          ...dataLocalStorage,
+          isModal: false,
+          isAutoMute: true,
+          isDefaultOutOfScreen: false,
+          prevSyncVolume: dataLocalStorage.syncVolume === 0 ? 1 : dataLocalStorage.syncVolume,
+          syncVolume: 0,
+          homeData: {
+              data: [],
+              page: 1,
+              current: null,
+          },
+      }
+    : {};
 const defaultInit = {
     isLogin: false,
     isModal: false,

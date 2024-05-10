@@ -52,8 +52,8 @@ function DefaultLayout({ children, ...store }) {
             } catch (error) {
                 console.log(error);
             }
-            testApi();
         };
+        testApi();
     }, []);
 
     return (

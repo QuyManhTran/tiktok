@@ -9,6 +9,7 @@ import { faForwardStep } from '@fortawesome/free-solid-svg-icons';
 import { Fragment, useEffect, useRef, useState } from 'react';
 import defaultDispatchs from '../../store/actions/defaultDispatch';
 import Modal from '../../components/Modal/Modal';
+import axios from 'axios';
 
 const cx = classNames.bind(styles);
 function DefaultLayout({ children, ...store }) {
@@ -39,6 +40,21 @@ function DefaultLayout({ children, ...store }) {
     const onComeBack = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
+
+    useEffect(() => {
+        const testApi = async () => {
+            try {
+                const res = await axios.post('https://gthai.click/api/v2/auth/login', {
+                    email: 'abc@gmail.com',
+                    password: '12345678',
+                });
+                console.log(res.data);
+            } catch (error) {
+                console.log(error);
+            }
+            testApi();
+        };
+    }, []);
 
     return (
         <Fragment>
